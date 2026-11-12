@@ -1,0 +1,6171 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avante Consultores — Registro & Custodia Documental</title>
+
+  <!-- Typography: Editorial Serif (Newsreader) + Executive Grotesque (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-serif: "Newsreader", "Iowan Old Style", "Apple Garamond", "Baskerville", "Georgia", serif;
+      --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+      --transition: all 0.2s var(--ease-out);
+    }
+
+    /* LIGHT MODE — Avante Champagne Ivory & Midnight Navy (Editorial, Cálido y Luminoso) */
+    html[data-theme="light"] {
+      --canvas: #FAF8F5;            /* Champagne Ivory Paper */
+      --surface: #FFFFFF;           /* Crisp Parchment */
+      --surface-warm: #F3EFE7;      /* Linen Rule Background */
+      --surface-sunken: #E7DFD0;    /* Aged paper crease */
+
+      --ink-primary: #0D1627;       /* Avante Deep Midnight Navy */
+      --ink-secondary: #334155;     /* Slate Navy Pencil (WCAG AA > 5.5:1) */
+      --ink-tertiary: #475569;      /* Muted Navy (WCAG AA > 4.6:1) */
+      --ink-on-dark: #FAF8F5;
+
+      --rule-fine: #E6DFD3;         /* Hairline Gold/Bone Rule */
+      --rule-medium: #D4C9B8;       /* Ledger Divider Rule */
+      --rule-strong: #B8A892;
+
+      --gold: #B38622;              /* Burnished Gold Accent */
+      --gold-hover: #966E18;
+      --gold-soft: #FAF4E5;
+      --gold-border: #E8D5A8;
+      --gold-metallic: linear-gradient(135deg, #C59E47 0%, #E7C875 50%, #B28522 100%);
+
+      --sidebar-bg: #0C1424;        /* Avante Obsidian Navy */
+      --sidebar-card: #141E34;
+      --sidebar-border: #233150;
+      --sidebar-text: #FAF8F5;
+      --sidebar-muted: #8E9DB8;
+
+      --kraft-box: #B87B2E;
+      --kraft-bg: #FDF6EC;
+      --kraft-border: #E9CFAB;
+
+      --shadow-subtle: 0 1px 3px rgba(13, 22, 39, 0.04), 0 4px 10px rgba(13, 22, 39, 0.03);
+      --shadow-elevated: 0 6px 18px rgba(13, 22, 39, 0.08), 0 2px 6px rgba(13, 22, 39, 0.04);
+    }
+
+    /* DARK MODE — Avante Consultores Signature Obsidian Navy & Brushed Gold */
+    html[data-theme="dark"] {
+      --canvas: #090F1B;            /* Obsidian Navy Base (from image) */
+      --surface: #10192A;           /* Midnight Slate Panel */
+      --surface-warm: #17233B;      /* Elevated Dark Navy */
+      --surface-sunken: #0D1524;
+
+      --ink-primary: #F8F5EE;       /* Warm Pearl Ivory */
+      --ink-secondary: #A0B0CB;     /* Starlight Slate Navy */
+      --ink-tertiary: #6E7F9B;
+      --ink-on-dark: #F8F5EE;
+
+      --rule-fine: #1F2D48;         /* Geometric Navy Line */
+      --rule-medium: #2B3D61;       /* Panel Border */
+      --rule-strong: #455C8A;
+
+      --gold: #DFB15B;              /* Logo Metallic Brushed Gold */
+      --gold-hover: #F0C670;
+      --gold-soft: rgba(223, 177, 91, 0.12);
+      --gold-border: rgba(223, 177, 91, 0.35);
+      --gold-metallic: linear-gradient(135deg, #DFB15B 0%, #F5D38A 50%, #C79639 100%);
+
+      --sidebar-bg: #070B14;
+      --sidebar-card: #0E1626;
+      --sidebar-border: #1C2A44;
+      --sidebar-text: #F8F5EE;
+      --sidebar-muted: #798AA6;
+
+      --kraft-box: #DFB15B;
+      --kraft-bg: rgba(223, 177, 91, 0.08);
+      --kraft-border: rgba(223, 177, 91, 0.28);
+
+      --shadow-subtle: 0 2px 6px rgba(0, 0, 0, 0.35);
+      --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* SIDEBAR — Avante Obsidian Navy */
+    .app-sidebar {
+      width: 320px;
+      min-width: 320px;
+      background-color: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-right: 1px solid var(--sidebar-border);
+      transition: transform 0.28s ease, background-color 0.25s ease;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.6rem 1.25rem;
+      border-bottom: 1px solid var(--sidebar-border);
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    /* Avante Golden Emblem */
+    .brand-emblem {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-metallic);
+      color: #0C1424;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(197, 158, 71, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #F8F5EE;
+      line-height: 1.15;
+    }
+
+    .brand-subtitle-gold {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.15rem;
+    }
+
+    .brand-meta-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      color: var(--sidebar-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 0.5rem;
+    }
+
+    .count-pill-gold {
+      background: rgba(223, 177, 91, 0.15);
+      border: 1px solid rgba(223, 177, 91, 0.35);
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: #F5D38A;
+      font-size: 0.78rem;
+    }
+
+    .sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: var(--sidebar-border);
+      border-radius: 2px;
+    }
+
+    .search-box-wrap {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 0.85rem 0.65rem 2.25rem;
+      background: var(--sidebar-card);
+      border: 1px solid var(--sidebar-border);
+      border-radius: var(--radius-sm);
+      color: #F8F5EE;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(223, 177, 91, 0.25);
+    }
+
+    .search-input::placeholder {
+      color: var(--sidebar-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--sidebar-muted);
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--sidebar-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      display: none;
+    }
+
+    .btn-reset-filters {
+      background: rgba(223, 177, 91, 0.08);
+      border: 1px solid rgba(223, 177, 91, 0.25);
+      color: #F5D38A;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.15s;
+    }
+
+    .btn-reset-filters:hover {
+      background: rgba(223, 177, 91, 0.18);
+      color: #FFF;
+      border-color: var(--gold);
+    }
+
+    .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #EAE3D5;
+      letter-spacing: 0.01em;
+    }
+
+    .filter-action-links {
+      display: flex;
+      gap: 0.45rem;
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+    }
+
+    .filter-action-btn {
+      background: none;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+      padding: 0;
+      font-weight: 600;
+    }
+
+    .filter-action-btn:hover {
+      text-decoration: underline;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      background: var(--sidebar-card);
+      border: 1px solid var(--sidebar-border);
+      border-radius: var(--radius-sm);
+      color: #F8F5EE;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: var(--gold);
+    }
+
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      max-height: 185px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+
+    .checkbox-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .checkbox-list::-webkit-scrollbar-thumb {
+      background: var(--sidebar-border);
+      border-radius: 2px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      cursor: pointer;
+      transition: background 0.12s;
+      user-select: none;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .checkbox-item label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #E2D9CB;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      accent-color: var(--gold);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .badge-count-dark {
+      font-size: 0.68rem;
+      background: var(--sidebar-card);
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      color: var(--sidebar-muted);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: var(--font-serif);
+    }
+
+    .color-pip {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* MAIN APP */
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--canvas);
+      transition: background 0.25s ease;
+    }
+
+    /* MASTHEAD / HEADER */
+    .top-masthead {
+      background: var(--surface);
+      border-bottom: 1px solid var(--rule-fine);
+      padding: 1.25rem 2.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--rule-medium);
+      padding: 0.45rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--ink-primary);
+    }
+
+    .masthead-title-wrap h1 {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+
+    .masthead-subtitle {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      margin-top: 0.2rem;
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
+
+    .masthead-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.55rem 0.95rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.72rem;
+    }
+
+    .btn-gold {
+      background: var(--gold-metallic);
+      color: #0C1424;
+      font-weight: 700;
+      border: 1px solid rgba(197, 158, 71, 0.4);
+      box-shadow: 0 1px 4px rgba(179, 134, 34, 0.2);
+    }
+    .btn-gold:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 3px 8px rgba(179, 134, 34, 0.3);
+    }
+
+    .btn-linen {
+      background: var(--surface);
+      border-color: var(--rule-medium);
+      color: var(--ink-primary);
+    }
+    .btn-linen:hover {
+      background: var(--surface-warm);
+      border-color: var(--rule-strong);
+    }
+
+    .btn-kraft {
+      background: var(--kraft-bg);
+      border-color: var(--kraft-border);
+      color: var(--kraft-box);
+      font-weight: 600;
+    }
+    .btn-kraft:hover {
+      filter: brightness(0.96);
+    }
+
+    .btn-subtle {
+      background: var(--surface-warm);
+      color: var(--ink-secondary);
+      border-color: transparent;
+    }
+    .btn-subtle:hover {
+      background: var(--surface-sunken);
+      color: var(--ink-primary);
+    }
+
+    .btn-danger-outline {
+      background: var(--surface);
+      border-color: #E2B3A8;
+      color: #C0392B;
+    }
+    .btn-danger-outline:hover {
+      background: rgba(192, 57, 43, 0.1);
+    }
+
+    /* View Switcher */
+    .view-switcher {
+      display: flex;
+      background: var(--surface-warm);
+      padding: 0.2rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--rule-fine);
+    }
+
+    .view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      min-height: 38px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    
+    @media (max-width: 640px) {
+      .view-btn {
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+      }
+      .view-switcher {
+        gap: 0.35rem;
+      }
+    }
+    .view-btn.active {
+      background: var(--surface);
+      color: var(--ink-primary);
+      box-shadow: var(--shadow-subtle);
+      border: 1px solid var(--rule-fine);
+    }
+
+    .view-btn.box-tab.active {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Theme Toggle Switch */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      color: var(--ink-primary);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--surface-warm);
+      border-color: var(--gold);
+    }
+
+    /* CONTENT AREA */
+    .content-area {
+      padding: 1.75rem 2.25rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 1650px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* EDITORIAL LEDGER MASTHEAD / METRICS */
+    .ledger-summary-strip {
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-subtle);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      overflow: hidden;
+    }
+
+    .ledger-metric {
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid var(--rule-fine);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .ledger-metric:last-child {
+      border-right: none;
+    }
+
+    .ledger-metric.clickable {
+      cursor: pointer;
+    }
+    .ledger-metric.clickable:hover {
+      background: var(--kraft-bg);
+    }
+
+    .ledger-metric-num {
+      font-family: var(--font-serif);
+      font-size: 2.15rem;
+      font-weight: 500;
+      color: var(--ink-primary);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .ledger-metric-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin-top: 0.45rem;
+    }
+
+    /* Active Filter Chips */
+    .filter-chips-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      background: var(--surface-warm);
+      border: 1px solid var(--rule-fine);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.74rem;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      color: var(--ink-primary);
+      font-size: 0.72rem;
+    }
+
+    .chip-close {
+      cursor: pointer;
+      color: var(--ink-tertiary);
+      font-weight: 700;
+    }
+    .chip-close:hover {
+      color: var(--gold);
+    }
+
+    /* Selection & Action Ledger Bar */
+    .selection-ledger-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--rule-fine);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 1rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .selection-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.8rem;
+      color: var(--ink-secondary);
+    }
+
+    .selection-tag {
+      background: var(--surface-warm);
+      border: 1px solid var(--rule-medium);
+      color: var(--ink-primary);
+      padding: 0.15rem 0.55rem;
+      border-radius: 3px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.75rem;
+    }
+
+    /* TABLE VIEW — Classical Register Ledger */
+    .ledger-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      box-shadow: var(--shadow-subtle);
+      max-height: calc(100vh - 290px);
+    }
+
+    .ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8rem;
+    }
+
+    .ledger-table thead {
+      background: var(--surface-warm);
+      border-bottom: 2px solid var(--rule-medium);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .ledger-table th {
+      padding: 0.8rem 0.95rem;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: background 0.12s, color 0.12s;
+      border-right: 1px solid rgba(216, 206, 189, 0.4);
+    }
+
+    html[data-theme="dark"] .ledger-table th {
+      border-right-color: rgba(43, 61, 97, 0.5);
+    }
+
+    .ledger-table th:last-child {
+      border-right: none;
+    }
+
+    .ledger-table th:hover {
+      background: var(--surface-sunken);
+      color: var(--ink-primary);
+    }
+
+    .ledger-table th.no-sort {
+      cursor: default;
+    }
+    .ledger-table th.no-sort:hover {
+      background: var(--surface-warm);
+      color: var(--ink-secondary);
+    }
+
+    .sort-indicator {
+      display: inline-block;
+      margin-left: 0.3rem;
+      color: var(--ink-tertiary);
+      font-size: 0.7rem;
+    }
+    .sort-indicator.active {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .ledger-table tbody tr {
+      border-bottom: 1px solid var(--rule-fine);
+      background: var(--surface);
+      transition: background 0.12s;
+    }
+
+    .ledger-table tbody tr:nth-child(even) {
+      background: var(--surface-warm);
+    }
+
+    .ledger-table tbody tr:hover {
+      background: var(--gold-soft);
+    }
+
+    .ledger-table tbody tr.row-selected {
+      background: var(--gold-soft) !important;
+      outline: 1px solid var(--gold-border);
+    }
+
+    .ledger-table td {
+      padding: 0.65rem 0.95rem;
+      color: var(--ink-primary);
+      vertical-align: middle;
+      border-right: 1px solid var(--rule-fine);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .ledger-table td:last-child {
+      border-right: none;
+    }
+
+    .td-num {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      width: 44px;
+    }
+
+    .td-title {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--ink-primary);
+      max-width: 290px;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-empresa {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 3px;
+    }
+
+    .badge-ubicacion {
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    .badge-almacen {
+      background: var(--kraft-bg);
+      color: var(--kraft-box);
+      border-color: var(--kraft-border);
+      font-weight: 700;
+    }
+
+    /* CARD VIEW — Archival Lever-Arch Folder Spines */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .spine-card {
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      padding-bottom: 2.25rem; /* Room for binder finger pull eyelet */
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: var(--shadow-subtle);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.15s ease;
+    }
+
+    /* Tactile metal binder eyelet (anillo metálico de extracción) */
+    .spine-card::after {
+      content: "";
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2.5px solid var(--rule-strong);
+      background: var(--surface-warm);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .spine-card:hover {
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .spine-card.card-selected {
+      border-color: var(--gold) !important;
+      background: var(--gold-soft) !important;
+    }
+
+    .spine-edge-rule {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    .spine-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 1.75rem;
+    }
+
+    .spine-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+      line-height: 1.35;
+    }
+
+    .spine-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .spine-meta-pill {
+      background: var(--surface-warm);
+      border: 1px solid var(--rule-fine);
+      color: var(--ink-secondary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .spine-card-notes {
+      background: var(--surface-warm);
+      border-left: 2px solid var(--gold);
+      padding: 0.45rem 0.7rem;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+    }
+
+    .spine-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--rule-fine);
+    }
+
+    /* ALMACEN BOXES VIEW — Storage System */
+    .boxes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .boxes-banner {
+      background: var(--surface);
+      border: 1px solid var(--gold-border);
+      color: var(--ink-primary);
+      padding: 1.4rem 1.8rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .boxes-banner-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .boxes-banner-desc {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      margin-top: 0.2rem;
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
+
+    .boxes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .kraft-box-card {
+      background: var(--surface);
+      border: 1.5px solid var(--kraft-border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: var(--shadow-subtle);
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .kraft-box-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-elevated);
+      transform: translateY(-2px);
+    }
+
+    .kraft-seal-tape {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 10px;
+      background: rgba(223, 177, 91, 0.3);
+      border: 1px solid rgba(223, 177, 91, 0.45);
+      border-top: none;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+
+    .kraft-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 0.25rem;
+    }
+
+    .kraft-box-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .kraft-box-count {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.78rem;
+      background: var(--gold-soft);
+      color: var(--gold);
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--gold-border);
+    }
+
+    .kraft-items-list {
+      background: var(--surface-warm);
+      border: 1px solid var(--rule-fine);
+      border-radius: 3px;
+      padding: 0.65rem 0.85rem;
+      max-height: 160px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .kraft-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      border-bottom: 1px solid var(--rule-fine);
+      padding-bottom: 0.25rem;
+    }
+    .kraft-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* FLOATING BULK ACTION BAR — Avante Obsidian Navy with Gold */
+    .bulk-action-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: #0C1424;
+      color: #F8F5EE;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+      border: 1px solid #2B3A57;
+      max-width: 95vw;
+      flex-wrap: wrap;
+    }
+
+    .bulk-action-bar.active {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bulk-count-badge {
+      background: var(--gold-metallic);
+      color: #0C1424;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-style: italic;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+    }
+
+    .btn-bulk-text {
+      background: none;
+      border: none;
+      color: #B0BFCF;
+      font-size: 0.74rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0.2rem 0.3rem;
+    }
+    .btn-bulk-text:hover {
+      color: #FFF;
+    }
+
+    .bulk-select-dark {
+      background: #162238;
+      color: #F8F5EE;
+      border: 1px solid #2C3E61;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    /* MODALS */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 28, 0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 180ms ease-in, visibility 0s linear 180ms;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 220ms var(--ease-out), visibility 0s linear 0s;
+    }
+
+    .modal-container {
+      background: var(--surface);
+      border: 1px solid var(--rule-medium);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.96) translateY(8px);
+      opacity: 0;
+      transition: transform 180ms ease-in, opacity 160ms ease-in;
+      will-change: transform, opacity;
+    }
+
+    .modal-backdrop.active .modal-container {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      transition: transform 220ms var(--ease-out), opacity 200ms var(--ease-out);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--rule-fine);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface-warm);
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.35rem;
+      color: var(--ink-tertiary);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close:hover {
+      color: var(--ink-primary);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      background: var(--surface);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .form-label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      letter-spacing: 0.01em;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--rule-medium);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--ink-primary);
+      background: var(--surface-warm);
+      outline: none;
+      transition: all 0.15s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+      background: var(--surface);
+      box-shadow: 0 0 0 2px rgba(179, 134, 34, 0.2);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 65px;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--rule-fine);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+      background: var(--surface-warm);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #0C1424;
+      color: #F8F5EE;
+      padding: 0.75rem 1.2rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 3px solid var(--gold);
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+      transform-origin: bottom right;
+      opacity: 0;
+      transform: translateY(14px) scale(0.97);
+      transition: transform 240ms var(--ease-out), opacity 200ms var(--ease-out);
+      will-change: transform, opacity;
+    }
+
+    .toast.toast-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .toast.toast-hiding {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 180ms ease-in, opacity 160ms ease-in;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-backdrop,
+      .modal-container,
+      .toast {
+        transform: none !important;
+        transition-duration: 0.15s !important;
+      }
+      .toast.toast-hiding {
+        transform: none !important;
+        transition-duration: 0.12s !important;
+      }
+    }
+
+    mark.highlight {
+      background: rgba(223, 177, 91, 0.3);
+      color: inherit;
+      padding: 0.05em 0.2em;
+      border-radius: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .app-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+      }
+      .app-sidebar.open {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(9, 15, 27, 0.65);
+        z-index: 35;
+        display: none;
+      }
+      .sidebar-backdrop.active {
+        display: block;
+      }
+      .top-masthead {
+        padding: 1rem 1.25rem;
+      }
+      .content-area {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .ledger-summary-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+      .ledger-metric {
+        border-bottom: 1px solid var(--rule-fine);
+      }
+      .bulk-action-bar {
+        border-radius: var(--radius-md);
+        bottom: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  
+    /* ==========================================================================
+       MODAL DE ETIQUETAS DE CAJAS & ESTILOS DE IMPRESIÓN PDF
+       ========================================================================== */
+    .label-config-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.5rem;
+      min-height: 480px;
+    }
+    @media (max-width: 860px) {
+      .label-config-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .label-controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      padding-right: 1.25rem;
+      border-right: 1px solid var(--rule-fine);
+    }
+    @media (max-width: 860px) {
+      .label-controls-panel {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--rule-fine);
+        padding-bottom: 1.25rem;
+      }
+    }
+
+    .label-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .label-control-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .label-preview-panel {
+      background: #525659; /* Standard PDF viewer canvas grey */
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      max-height: 620px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* THE PHYSICAL PRINTABLE LABEL CONTAINER */
+    .print-box-sheet {
+      background: #FFFFFF !important;
+      color: #0D1627 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      box-sizing: border-box;
+      margin: 0 auto;
+      font-family: var(--font-sans);
+      position: relative;
+    }
+
+    /* Size variants for preview */
+    .sheet-a4 {
+      width: 100%;
+      max-width: 580px;
+      min-height: 780px;
+      padding: 2rem 2.2rem;
+    }
+    .sheet-a5 {
+      width: 100%;
+      max-width: 520px;
+      min-height: 400px;
+      padding: 1.5rem 1.6rem;
+    }
+    .sheet-compact {
+      width: 100%;
+      max-width: 440px;
+      min-height: 320px;
+      padding: 1.2rem 1.2rem;
+    }
+
+    /* Label Layout Elements */
+    .plabel-border-frame {
+      border: 2px solid #0D1627;
+      padding: 1.2rem;
+      height: calc(100% - 2.4rem);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .plabel-cut-guide {
+      border: 1.5px dashed #A0AEC0 !important;
+    }
+
+    .plabel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #0D1627;
+      padding-bottom: 0.85rem;
+      margin-bottom: 0.9rem;
+      gap: 1rem;
+    }
+    .plabel-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .plabel-logo {
+      width: 40px;
+      height: 40px;
+      background: #090F1B;
+      color: #DFB15B;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      border: 1.5px solid #DFB15B;
+    }
+    .plabel-company-name {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #090F1B;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+    }
+    .plabel-company-sub {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #64748B;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+    }
+
+    .plabel-box-badge {
+      text-align: right;
+    }
+    .plabel-box-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #090F1B;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .plabel-box-qty {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #B38622;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.25rem;
+    }
+
+    /* Metadata strip */
+    .plabel-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-radius: 4px;
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.9rem;
+    }
+    .plabel-meta-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .plabel-meta-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .plabel-meta-val {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #0F172A;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Items table */
+    .plabel-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.9rem;
+      font-size: 0.72rem;
+    }
+    .plabel-table th {
+      background: #090F1B;
+      color: #FFFFFF;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.5rem;
+      text-align: left;
+      border: 1px solid #090F1B;
+    }
+    .plabel-table td {
+      padding: 0.32rem 0.5rem;
+      border: 1px solid #CBD5E1;
+      color: #1E293B;
+      vertical-align: middle;
+      font-variant-numeric: tabular-nums;
+    }
+    .plabel-table tr:nth-child(even) td {
+      background: #F8FAFC;
+    }
+    .plabel-td-folio {
+      font-weight: 700;
+      color: #090F1B;
+      width: 48px;
+      text-align: center;
+      background: #F1F5F9 !important;
+    }
+
+    /* 2 Columns layout */
+    .plabel-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    /* Font size modifiers */
+    .plabel-font-sm .plabel-table { font-size: 0.65rem; }
+    .plabel-font-sm .plabel-table td { padding: 0.22rem 0.4rem; }
+    .plabel-font-md .plabel-table { font-size: 0.74rem; }
+    .plabel-font-md .plabel-table td { padding: 0.34rem 0.5rem; }
+    .plabel-font-lg .plabel-table { font-size: 0.84rem; }
+    .plabel-font-lg .plabel-table td { padding: 0.45rem 0.6rem; }
+
+    /* Footer: Signatures and Date */
+    .plabel-footer {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid #0D1627;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+    .plabel-footer-legal {
+      font-size: 0.6rem;
+      color: #64748B;
+      line-height: 1.35;
+      max-width: 65%;
+    }
+    .plabel-sign-box {
+      text-align: center;
+      min-width: 170px;
+    }
+    .plabel-sign-line {
+      border-bottom: 1.5px solid #0D1627;
+      margin-bottom: 0.3rem;
+      height: 35px;
+    }
+    .plabel-sign-caption {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #090F1B;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ==========================================================================
+       PRINT MEDIA STYLES
+       ========================================================================== */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printableLabelArea, #printableLabelArea * {
+        visibility: visible !important;
+      }
+      #printableLabelArea {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      .print-box-sheet {
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .no-print, .modal-backdrop, .toast-container, .app-sidebar, .top-masthead, .bulk-action-bar {
+        display: none !important;
+      }
+      @page {
+        margin: 8mm;
+        size: auto;
+      }
+    }
+
+</style>
+</head>
+<body>
+
+  <!-- Backdrop for mobile sidebar -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileSidebar()"></div>
+
+  <!-- SIDEBAR — Avante Obsidian Navy & Metallic Gold -->
+  <aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-header">
+      <div class="brand-title">
+        <div class="brand-emblem">
+          A
+        </div>
+        <div>
+          <div class="brand-name">AVANTE</div>
+          <div class="brand-subtitle-gold">CONSULTORES</div>
+        </div>
+      </div>
+      <div class="brand-meta-strip">
+        <span>Control de Archivo Físico</span>
+        <span class="count-pill-gold" id="sidebarTotalBadge">120 volúmenes</span>
+      </div>
+    </div>
+
+    <div class="sidebar-scroll">
+      <!-- Search Input -->
+      <div class="search-box-wrap">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <label for="searchInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Buscar archivadores</label><input type="text" id="searchInput" class="search-input" placeholder="Buscar texto, notas, caja, CyB..." oninput="handleSearchInput()" aria-label="Buscar archivadores por texto, notas o banco">
+        <button id="searchClearBtn" class="search-clear" onclick="clearSearch()">&times;</button>
+      </div>
+
+      <!-- Reset Filters Button -->
+      <button class="btn-reset-filters" id="resetFiltersBtn" onclick="resetAllFilters()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Restablecer Filtros (<span id="activeFiltersCount">0</span>)
+      </button>
+
+      <!-- Filter: Ubicacion & Cajas de Almacen -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Ubicación Física</span>
+        </div>
+        <select id="filterUbicacion" class="filter-select" onchange="handleFilterUbicacionChange()">
+          <option value="">Todas las Ubicaciones</option>
+          <option value="Izquierda">⬅ Izquierda (Anaquel 1)</option>
+          <option value="Derecha">➡ Derecha (Anaquel 2)</option>
+          <option value="Encima">⬆ Encima (Estantería)</option>
+          <option value="Almacén">📦 Almacén Central</option>
+        </select>
+
+        <!-- Sub-filter: Cajas de Almacén -->
+        <div id="subfilterCajaWrap" style="display:none; margin-top:0.35rem; background:rgba(223, 177, 91, 0.1); border:1px solid rgba(223, 177, 91, 0.3); padding:0.5rem; border-radius:4px;">
+          <div style="font-size:0.68rem; color:#F5D38A; font-weight:700; margin-bottom:0.25rem;">
+            Caja de Almacén:
+          </div>
+          <select id="filterCaja" class="filter-select" onchange="applyFilters()" style="background:#0F192A; border-color:#8C6E26;">
+            <option value="">Todas las Cajas de Almacén</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter: Tipo -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Tipo de Documento</span>
+          <div class="filter-action-links">
+            <button class="filter-action-btn" onclick="toggleAllTipos(true)">Todos</button>
+            <span style="color:#3C4F72">|</span>
+            <button class="filter-action-btn" onclick="toggleAllTipos(false)">Ninguno</button>
+          </div>
+        </div>
+        <div class="checkbox-list" id="tipoCheckboxList">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Filter: Empresa -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Empresas</span>
+          <div class="filter-action-links">
+            <button class="filter-action-btn" onclick="toggleAllEmpresas(true)">Todas</button>
+            <span style="color:#3C4F72">|</span>
+            <button class="filter-action-btn" onclick="toggleAllEmpresas(false)">Ninguna</button>
+          </div>
+        </div>
+        <div class="checkbox-list" id="empresaCheckboxList">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Filter: Año -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Año Fiscal</span>
+        </div>
+        <select id="filterAnio" class="filter-select" onchange="applyFilters()">
+          <option value="">Todos los Años</option>
+        </select>
+      </div>
+
+      <!-- Filter: Mes -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Periodo / Mes</span>
+        </div>
+        <select id="filterMes" class="filter-select" onchange="applyFilters()">
+          <option value="">Todos los Meses</option>
+          <option value="Enero">Enero</option>
+          <option value="Febrero">Febrero</option>
+          <option value="Marzo">Marzo</option>
+          <option value="Abril">Abril</option>
+          <option value="Mayo">Mayo</option>
+          <option value="Junio">Junio</option>
+          <option value="Julio">Julio</option>
+          <option value="Agosto">Agosto</option>
+          <option value="Septiembre">Septiembre</option>
+          <option value="Octubre">Octubre</option>
+          <option value="Noviembre">Noviembre</option>
+          <option value="Diciembre">Diciembre</option>
+          <option value="Febrero-Marzo">Febrero-Marzo</option>
+          <option value="04-06">04-06</option>
+          <option value="Varios">Varios / No especificado</option>
+        </select>
+      </div>
+
+      <!-- Filter: Banco -->
+      <div class="filter-section">
+        <div class="filter-section-header">
+          <span>Entidad Bancaria</span>
+        </div>
+        <select id="filterBanco" class="filter-select" onchange="applyFilters()">
+          <option value="">Todos los Bancos</option>
+          <option value="BCP">BCP</option>
+          <option value="BBVA">BBVA</option>
+          <option value="Scotiabank">Scotiabank</option>
+          <option value="Interbank">Interbank</option>
+          <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+          <option value="__SIN_BANCO__">Sin Banco especificado</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <main class="app-main" id="appMain">
+    <!-- Topbar Masthead -->
+    <header class="top-masthead">
+      <div style="display:flex; align-items:center; gap:0.85rem;">
+        <button class="menu-toggle" id="menuToggleBtn" onclick="toggleMobileSidebar()" title="Abrir Filtros" aria-expanded="false" aria-label="Abrir panel de filtros de archivadores">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="masthead-title-wrap">
+          <h1>Registro & Custodia Documental</h1>
+          <p class="masthead-subtitle">Custodia y auditoría de comprobantes contables, tributarios y bancarios</p>
+        </div>
+      </div>
+
+      <div class="masthead-actions">
+        <!-- View Switcher -->
+        <div class="view-switcher">
+          <button class="view-btn active" id="btnViewTable" onclick="switchView('table')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 3h18v18H3z"/>
+              <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+            </svg>
+            Tabla
+          </button>
+          <button class="view-btn" id="btnViewCards" onclick="switchView('cards')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Fichas
+          </button>
+          <button class="view-btn box-tab" id="btnViewBoxes" onclick="switchView('boxes')" title="Distribución de cajas en almacén">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+              <path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>
+            </svg>
+            Cajas Almacén
+          </button>
+        </div>
+
+        <!-- Light / Dark Mode Toggle -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Alternar Modo Claro / Modo Oscuro">
+          <span id="themeToggleIcon">🌙</span>
+          <span id="themeToggleLabel">Modo Oscuro</span>
+        </button>
+
+        <button class="btn btn-gold" onclick="openAddModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Nuevo Archivador
+        </button>
+
+        <button class="btn btn-linen" onclick="exportToCSV()" title="Descargar como CSV para Excel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Exportar CSV
+        </button>
+
+        <button class="btn btn-subtle" onclick="promptResetInitialData()" title="Restaurar dataset original">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+            <path d="M8 16H3v5"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- EDITORIAL LEDGER SUMMARY STRIP -->
+      <section class="ledger-summary-strip">
+        <div class="ledger-metric">
+          <div class="ledger-metric-num" id="statTotalCount">0</div>
+          <div class="ledger-metric-label">Archivadores en Registro</div>
+        </div>
+
+        <div class="ledger-metric">
+          <div class="ledger-metric-num" id="statFilteredCount">0 de 0</div>
+          <div class="ledger-metric-label">Coinciden con Criterio</div>
+        </div>
+
+        <div class="ledger-metric">
+          <div class="ledger-metric-num" id="statCompaniesCount">0</div>
+          <div class="ledger-metric-label">Empresas en Custodia</div>
+        </div>
+
+        <div class="ledger-metric">
+          <div class="ledger-metric-num" id="statDistributionCyB" style="color:var(--gold);">0</div>
+          <div class="ledger-metric-label">Compras y Bancos (CyB)</div>
+        </div>
+
+        <div class="ledger-metric clickable" onclick="filterQuickAlmacen()" title="Ver distribución en Cajas de Almacén">
+          <div class="ledger-metric-num" id="statAlmacenCount" style="color:var(--gold);">0</div>
+          <div class="ledger-metric-label">En Almacén (<span id="statCajasCount">0</span> cajas de custodia)</div>
+        </div>
+      </section>
+
+      <!-- Active Filters Chips -->
+      <div class="filter-chips-bar" id="filterChipsBar" style="display:none;">
+        <span style="font-weight:600; color:var(--ink-secondary); font-family:var(--font-serif); font-style:italic;">Filtros activos:</span>
+        <div id="chipsContainer" style="display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center;"></div>
+        <button class="filter-action-btn" onclick="resetAllFilters()" style="margin-left:auto;">Limpiar todo</button>
+      </div>
+
+      <!-- Selection & Mass Action Bar -->
+      <section class="selection-ledger-bar">
+        <div class="selection-left">
+          <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAllVisible(this.checked)" title="Seleccionar todos los visibles" style="cursor:pointer; width:15px; height:15px; accent-color:var(--gold);">
+          <label for="selectAllCheckbox" style="font-weight:600; cursor:pointer; color:var(--ink-primary);">Seleccionar visibles</label>
+          <span class="selection-tag" id="selectedBadge"><span id="selectedCountNumber">0</span> seleccionados</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-sm btn-linen" id="btnQuickMoveFiltered" onclick="openBulkMoveModal(true)">
+            ⚡ Mover los <span id="filteredVisibleCount">0</span> visibles a...
+          </button>
+          <button type="button" class="btn btn-sm btn-gold" id="btnMoveSelected" onclick="openBulkMoveModal(false)" style="display:none;">
+            📦 Mover (<span id="moveSelectedCount">0</span>) seleccionados
+          </button>
+          <button type="button" class="btn btn-sm btn-subtle" id="btnClearSelection" onclick="clearSelection()" style="display:none;">
+            Desmarcar
+          </button>
+        </div>
+      </section>
+
+      <!-- Table View Section (Editorial Register) -->
+      <section class="ledger-table-wrap" id="tableViewSection">
+        <table class="ledger-table">
+          <thead>
+            <tr>
+              <th class="no-sort" style="width:36px; text-align:center;">
+                <input type="checkbox" id="headerCheckbox" onchange="toggleSelectAllVisible(this.checked)" title="Seleccionar todos" aria-label="Seleccionar todos los archivadores visibles" style="accent-color:var(--gold);">
+              </th>
+              <th onclick="handleSort('id')" style="width:48px;">
+                Folio <span class="sort-indicator" id="sort-id">▲</span>
+              </th>
+              <th onclick="handleSort('empresa')">
+                Empresa <span class="sort-indicator" id="sort-empresa">↕</span>
+              </th>
+              <th onclick="handleSort('descripcion')">
+                Descripción del Archivador <span class="sort-indicator" id="sort-descripcion">↕</span>
+              </th>
+              <th onclick="handleSort('tipo')">
+                Tipo <span class="sort-indicator" id="sort-tipo">↕</span>
+              </th>
+              <th onclick="handleSort('mes')">
+                Mes <span class="sort-indicator" id="sort-mes">↕</span>
+              </th>
+              <th onclick="handleSort('año')">
+                Año <span class="sort-indicator" id="sort-año">↕</span>
+              </th>
+              <th onclick="handleSort('banco')">
+                Entidad Bancaria <span class="sort-indicator" id="sort-banco">↕</span>
+              </th>
+              <th onclick="handleSort('ubicacion')">
+                Ubicación / Caja <span class="sort-indicator" id="sort-ubicacion">↕</span>
+              </th>
+              <th class="no-sort" style="text-align:right; width:80px;">Gestión</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Injected via JS -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Card View Section (Archival Lever-Arch Spines) -->
+      <section class="cards-grid" id="cardsViewSection" style="display:none;">
+        <!-- Injected via JS -->
+      </section>
+
+      <!-- Warehouse Boxes View Section -->
+      <section class="boxes-container" id="boxesViewSection" style="display:none;">
+        <div class="boxes-banner">
+          <div>
+            <h2 class="boxes-banner-title">Custodia en Cajas de Almacén</h2>
+            <p class="boxes-banner-desc">Distribución física de archivadores empacados por caja (C1, C2, C3...).</p>
+          </div>
+          <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+            <button type="button" class="btn btn-linen" onclick="openBoxLabelModal('__TODAS__')">
+              🏷️ Imprimir Todas las Etiquetas
+            </button>
+            <button type="button" class="btn btn-gold" onclick="promptCreateNewBox()">
+              ➕ Asignar / Crear Nueva Caja
+            </button>
+          </div>
+        </div>
+
+        <div class="boxes-grid" id="boxesGridContainer">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none; background:var(--surface); border:1px dashed var(--rule-strong); border-radius:var(--radius-md); padding:3.5rem 2rem; text-align:center;">
+        <div style="font-size:2.5rem; color:var(--ink-tertiary);">📇</div>
+        <h3 style="font-family:var(--font-serif); font-size:1.25rem; font-weight:600; color:var(--ink-primary); margin-top:0.5rem;">No se encontraron registros</h3>
+        <p style="font-family:var(--font-serif); font-style:italic; font-size:0.85rem; color:var(--ink-secondary); margin-top:0.25rem;">
+          No hay ningún archivador que coincida con los criterios de búsqueda o filtros seleccionados.
+        </p>
+        <button class="btn btn-gold" onclick="resetAllFilters()" style="margin-top:1rem;">Restablecer Filtros</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Bulk Action Bar -->
+  <div class="bulk-action-bar" id="floatingBulkBar">
+    <div style="display:flex; align-items:center; gap:0.55rem;">
+      <span class="bulk-count-badge" id="floatSelectedCount">0 seleccionados</span>
+      <button type="button" class="btn-bulk-text" onclick="clearSelection()">Desmarcar</button>
+    </div>
+    <div style="display:flex; align-items:center; gap:0.5rem;">
+      <span style="font-size:0.76rem; color:#A8B7D0;">Mover a:</span>
+      <select id="floatUbicacionSelect" class="bulk-select-dark" onchange="handleFloatUbicacionChange()">
+        <option value="Izquierda">⬅ Izquierda (Anaquel 1)</option>
+        <option value="Derecha">➡ Derecha (Anaquel 2)</option>
+        <option value="Encima">⬆ Encima (Estantería)</option>
+        <option value="Almacén">📦 Almacén</option>
+        <option value="__CUSTOM__">✏ Otra ubicación...</option>
+      </select>
+      
+      <div id="floatAlmacenCajaWrap" style="display:none;">
+        <input type="text" id="floatCajaInput" list="cajasDatalist" placeholder="Caja (C1, C2)..." style="padding:0.35rem 0.55rem; border-radius:3px; border:1px solid var(--gold); background:#162238; color:#F5D38A; font-size:0.78rem; width:120px;">
+      </div>
+
+      <input type="text" id="floatCustomUbicacion" placeholder="Nueva ubicación..." style="display:none; padding:0.35rem 0.55rem; border-radius:3px; border:1px solid #2C3E61; background:#162238; color:white; font-size:0.78rem; width:130px;">
+      
+      <button type="button" class="btn btn-gold btn-sm" onclick="applyFloatBulkMove()">
+        Aplicar Cambio
+      </button>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT MODAL -->
+  <div class="modal-backdrop" id="archivadorModal" onclick="handleBackdropClick(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Nuevo Registro de Archivador</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <form id="archivadorForm" onsubmit="handleFormSubmit(event)">
+        <input type="hidden" id="formId" value="">
+        <div class="modal-body">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="formEmpresa">Empresa <span style="color:var(--gold);">*</span></label>
+              <input type="text" id="formEmpresa" class="form-input" list="empresasList" required placeholder="Ej: Avante, Ssoma, Alcaba..." oninput="onFormFieldChange()">
+              <datalist id="empresasList"></datalist>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formTipo">Tipo de Documento <span style="color:var(--gold);">*</span></label>
+              <select id="formTipo" class="form-select" required onchange="onFormFieldChange()">
+                <option value="Compras y Bancos">Compras y Bancos (CyB)</option>
+                <option value="Ventas">Ventas</option>
+                <option value="Importaciones">Importaciones</option>
+                <option value="Validación">Validación</option>
+                <option value="Impuestos">Impuestos</option>
+                <option value="Documentos Varios">Documentos Varios</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Description with Auto-generate Button -->
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.25rem;">
+              <label class="form-label" for="formDescripcion" style="margin-bottom:0;">Descripción Completa <span style="color:var(--gold);">*</span></label>
+              <button type="button" class="btn-subtle btn-sm" onclick="generateAutoDescription(true)" style="border:1px solid var(--rule-medium); background:var(--surface); cursor:pointer;">
+                ✨ Autogenerar con datos
+              </button>
+            </div>
+            <input type="text" id="formDescripcion" class="form-input" required placeholder="Ej: Avante | Compras y Bancos Junio 2026 BCP Parte 1" oninput="onDescriptionManualInput()">
+            <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
+              <input type="checkbox" id="autoUpdateDescCheckbox" checked style="cursor:pointer; width:13px; height:13px; accent-color:var(--gold);">
+              <label for="autoUpdateDescCheckbox" style="font-size:0.72rem; color:var(--ink-secondary); cursor:pointer;">
+                Actualizar descripción automáticamente al modificar los campos
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="formMes">Periodo / Mes</label>
+              <select id="formMes" class="form-select" onchange="onFormFieldChange()">
+                <option value="Varios">Varios / No especificado</option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+                <option value="Febrero-Marzo">Febrero-Marzo</option>
+                <option value="04-06">04-06</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formAnio">Año</label>
+              <input type="text" id="formAnio" class="form-input" placeholder="Ej: 2026, 2025, 2025-2026..." oninput="onFormFieldChange()">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="formBanco">Entidad Bancaria</label>
+              <select id="formBanco" class="form-select" onchange="onFormFieldChange()">
+                <option value="">(Ninguno)</option>
+                <option value="BCP">BCP</option>
+                <option value="BBVA">BBVA</option>
+                <option value="Scotiabank">Scotiabank</option>
+                <option value="Interbank">Interbank</option>
+                <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formParte">Parte / Tomo</label>
+              <input type="text" id="formParte" class="form-input" placeholder="Ej: Parte 1, Parte 2..." oninput="onFormFieldChange()">
+            </div>
+          </div>
+
+          <!-- Ubicacion & Caja de Almacen -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="formUbicacion">Ubicación Física <span style="color:var(--gold);">*</span></label>
+              <select id="formUbicacion" class="form-select" required onchange="handleFormUbicacionChange()">
+                <option value="Izquierda">⬅ Izquierda (Anaquel 1)</option>
+                <option value="Derecha">➡ Derecha (Anaquel 2)</option>
+                <option value="Encima">⬆ Encima (Estantería)</option>
+                <option value="Almacén">📦 Almacén Central</option>
+              </select>
+            </div>
+            <div class="form-group" id="formCajaGroup" style="display:none;">
+              <label class="form-label" for="formCaja">📦 Identificador de Caja (Almacén)</label>
+              <input type="text" id="formCaja" class="form-input" list="cajasDatalist" placeholder="Ej: C1, C2, Caja 1..." oninput="onFormFieldChange()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formNotas">Anotaciones Marginales / Notas</label>
+            <textarea id="formNotas" class="form-textarea" placeholder="Ej: Detracciones, Caja chica, validaciones especiales..." oninput="onFormFieldChange()"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-linen" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn btn-gold" id="modalSubmitBtn">Guardar Volumen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BULK MOVE MODAL -->
+  <div class="modal-backdrop" id="bulkMoveModal" onclick="handleBulkBackdropClick(event)">
+    <div class="modal-container" style="max-width: 490px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Cambio de Ubicación en Bloque</h2>
+        <button class="modal-close" onclick="closeBulkMoveModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-family:var(--font-serif); font-size:0.92rem; color:var(--ink-secondary);" id="bulkMoveDescription">
+          Reasignación de ubicación física para los archivadores seleccionados.
+        </p>
+
+        <div class="form-group" style="margin-top:0.4rem;">
+          <label class="form-label" for="bulkModalTargetUbicacion">Nueva Ubicación de Destino:</label>
+          <select id="bulkModalTargetUbicacion" class="form-select" onchange="handleBulkModalUbicacionChange()">
+            <option value="Izquierda">⬅ Izquierda (Anaquel 1)</option>
+            <option value="Derecha">➡ Derecha (Anaquel 2)</option>
+            <option value="Encima">⬆ Encima (Estantería)</option>
+            <option value="Almacén">📦 Almacén Central</option>
+            <option value="__CUSTOM__">✏ Otra ubicación personalizada...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="bulkModalCajaWrap" style="display:none; background:var(--kraft-bg); border:1px solid var(--kraft-border); padding:0.75rem; border-radius:4px;">
+          <label class="form-label" for="bulkModalCajaInput" style="color:var(--gold);">📦 Asignar a Caja (ej: C1, C2, Caja 4):</label>
+          <input type="text" id="bulkModalCajaInput" class="form-input" list="cajasDatalist" placeholder="Ej: C1, C2, Caja 1..." style="background:var(--surface);">
+        </div>
+
+        <div class="form-group" id="bulkModalCustomWrap" style="display:none;">
+          <label class="form-label" for="bulkModalCustomUbicacion">Nombre de la ubicación:</label>
+          <input type="text" id="bulkModalCustomUbicacion" class="form-input" placeholder="Ej: Sala de Juntas, Archivo Pasillo B...">
+        </div>
+
+        <div style="background:var(--surface-warm); border:1px solid var(--rule-fine); border-radius:4px; padding:0.65rem 0.85rem; max-height:120px; overflow-y:auto; font-size:0.75rem; color:var(--ink-secondary);" id="bulkMovePreviewList">
+          <!-- Preview -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-linen" onclick="closeBulkMoveModal()">Cancelar</button>
+        <button type="button" class="btn btn-gold" onclick="confirmExecuteBulkMove()">Aplicar Traslado</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE MODAL -->
+  <div class="modal-backdrop" id="deleteConfirmModal">
+    <div class="modal-container" style="max-width: 420px;">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color:#C0392B;">Eliminar de Registro</h2>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteConfirmDesc" style="font-family:var(--font-serif); font-size:0.92rem; color:var(--ink-secondary); line-height:1.5;">
+          ¿Estás seguro de que deseas eliminar este archivador de los registros?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-linen" onclick="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger-outline" id="confirmDeleteBtn">Sí, Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESET DATA CONFIRM MODAL -->
+  <div class="modal-backdrop" id="resetConfirmModal">
+    <div class="modal-container" style="max-width: 440px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Restaurar Registro Inicial</h2>
+        <button class="modal-close" onclick="closeResetModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-family:var(--font-serif); font-size:0.92rem; color:var(--ink-secondary); line-height:1.5;">
+          Esta acción restablecerá el inventario completo a los <strong>120 archivadores originales</strong>, revirtiendo cambios no guardados en el almacenamiento local.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-linen" onclick="closeResetModal()">Cancelar</button>
+        <button type="button" class="btn btn-gold" onclick="confirmResetInitialData()">Sí, Restaurar</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- MODAL: GENERADOR DE ETIQUETA IMPRIMIBLE DE CAJA (PDF) -->
+  <div class="modal-backdrop" id="boxLabelModal" onclick="handleLabelBackdropClick(event)">
+    <div class="modal-container" style="max-width: 980px; width: 95%;">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.6rem;">
+          <span style="font-size:1.3rem;">🏷️</span>
+          <div>
+            <h2 class="modal-title">Etiqueta de Custodia para Caja de Almacén</h2>
+            <div style="font-size:0.75rem; color:var(--ink-secondary);">Formato físico imprimible y exportable a PDF para rótulo de caja</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeBoxLabelModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:1.25rem 1.5rem;">
+        <div class="label-config-grid">
+          <!-- Controls Panel (Left) -->
+          <div class="label-controls-panel">
+            <div class="label-control-group">
+              <label class="label-control-label" for="labelBoxSelect">Caja de Almacén</label>
+              <select id="labelBoxSelect" class="form-select" onchange="onLabelConfigChange()">
+                <!-- Populated dynamically via JS -->
+              </select>
+            </div>
+
+            <div class="label-control-group">
+              <label class="label-control-label" for="labelSizeSelect">Formato / Tamaño de Papel</label>
+              <select id="labelSizeSelect" class="form-select" onchange="onLabelConfigChange()">
+                <option value="a4" selected>A4 Hoja Completa (210 x 297 mm) • Rótulo Maestro</option>
+                <option value="a5">A5 Media Hoja (148 x 210 mm) • Lateral de Caja</option>
+                <option value="compact">Etiqueta 10 x 15 cm (4 x 6") • Frontal Compacto</option>
+              </select>
+            </div>
+
+            <div class="label-control-group">
+              <label class="label-control-label" for="labelColsSelect">Distribución de Lista</label>
+              <select id="labelColsSelect" class="form-select" onchange="onLabelConfigChange()">
+                <option value="1" selected>1 Columna (Espaciosa, títulos completos)</option>
+                <option value="2">2 Columnas (Para cajas con 10+ archivadores)</option>
+              </select>
+            </div>
+
+            <div class="label-control-group">
+              <label class="label-control-label" for="labelFontSelect">Tamaño de Tipografía</label>
+              <select id="labelFontSelect" class="form-select" onchange="onLabelConfigChange()">
+                <option value="sm">Compacta (8pt • Listas extensas)</option>
+                <option value="md" selected>Estándar (10pt • Recomendada)</option>
+                <option value="lg">Grande (12pt • Lectura rápida en estante)</option>
+              </select>
+            </div>
+
+            <div class="label-control-group" style="margin-top:0.25rem;">
+              <span class="label-control-label">Elementos a Incluir</span>
+              <div style="display:flex; flex-direction:column; gap:0.45rem; margin-top:0.25rem;">
+                <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--ink-primary); cursor:pointer;">
+                  <input type="checkbox" id="labelOptHeader" checked onchange="onLabelConfigChange()" style="accent-color:var(--gold);">
+                  Membrete oficial de Avante Consultores
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--ink-primary); cursor:pointer;">
+                  <input type="checkbox" id="labelOptMeta" checked onchange="onLabelConfigChange()" style="accent-color:var(--gold);">
+                  Resumen de empresas y ejercicio fiscal
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--ink-primary); cursor:pointer;">
+                  <input type="checkbox" id="labelOptSign" checked onchange="onLabelConfigChange()" style="accent-color:var(--gold);">
+                  Recuadro de firma y sello del auditor
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--ink-primary); cursor:pointer;">
+                  <input type="checkbox" id="labelOptBorder" checked onchange="onLabelConfigChange()" style="accent-color:var(--gold);">
+                  Marco exterior con guías de corte
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-top:auto; padding-top:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+              <button type="button" class="btn btn-gold" onclick="executePrintBoxLabel()" style="width:100%; justify-content:center; padding:0.75rem 1rem; font-size:0.9rem; font-weight:700;">
+                🖨️ Imprimir / Guardar en PDF
+              </button>
+              <button type="button" class="btn btn-linen" onclick="closeBoxLabelModal()" style="width:100%; justify-content:center;">
+                Cerrar Ventana
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Preview Panel (Right) -->
+          <div class="label-preview-panel" id="labelPreviewContainer">
+            <div id="labelPreviewInner" style="width:100%;">
+              <!-- Injected dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Hidden Print Area for window.print() -->
+  <div id="printableLabelArea" style="display:none;"></div>
+
+  <datalist id="cajasDatalist"></datalist>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    const STORAGE_KEY = 'ARCHIVADORES_INVENTORY_DATA_V2';
+    const THEME_KEY = 'ARCHIVADORES_THEME';
+
+    const INITIAL_DATA = [
+  {
+    "id": 1,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Julio 2026 | Compras y Bancos (inferido)",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "Compras y Bancos inferido",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 2,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Tarjeta de crédito 2025 | Compras y Bancos",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "Tarjeta de Crédito",
+    "parte": "",
+    "notas": "Tarjeta de Crédito",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 3,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Julio 2026 | Compras y Bancos | BCP",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 4,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Compras y Bancos Parte 1 2025 | Detracciones",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "Detracciones",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 5,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Compras y Bancos Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 6,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Compras y Bancos Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 7,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Documentos Varios",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 8,
+    "empresa": "Evaneabel",
+    "descripcion": "Evaneabel | Compras y Bancos 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 9,
+    "empresa": "Freddy Estrada",
+    "descripcion": "Freddy Estrada | Compras y Bancos Marzo 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 10,
+    "empresa": "Freddy Estrada",
+    "descripcion": "Freddy Estrada | Compras y Bancos Marzo 2026 Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 11,
+    "empresa": "MJC",
+    "descripcion": "MJC | Compras y Bancos Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 12,
+    "empresa": "Diana",
+    "descripcion": "Diana | Impuestos SUNAT 2025-2026",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025-2026",
+    "banco": "",
+    "parte": "",
+    "notas": "SUNAT",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 13,
+    "empresa": "Diana",
+    "descripcion": "Diana | Compras y Bancos 2025-2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2025-2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 14,
+    "empresa": "Avante",
+    "descripcion": "Avante | Compras y Bancos 2026 Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 15,
+    "empresa": "Avante",
+    "descripcion": "Avante | Compras y Bancos 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 16,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Septiembre",
+    "tipo": "Compras y Bancos",
+    "mes": "Septiembre",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 17,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Agosto",
+    "tipo": "Compras y Bancos",
+    "mes": "Agosto",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 18,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación VI",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Parte VI",
+    "notas": "Validación VI",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 19,
+    "empresa": "Importaciones",
+    "descripcion": "Importaciones | Parte 2 2025",
+    "tipo": "Importaciones",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 20,
+    "empresa": "Importaciones",
+    "descripcion": "Importaciones | Parte 1 2025",
+    "tipo": "Importaciones",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 21,
+    "empresa": "Importaciones",
+    "descripcion": "Importaciones | Parte 1 2026",
+    "tipo": "Importaciones",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 22,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación V",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Parte V",
+    "notas": "Validación V",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 23,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación II 2026",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte II",
+    "notas": "Validación II",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 24,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación IV",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Parte IV",
+    "notas": "Validación IV",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 25,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación I",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Parte I",
+    "notas": "Validación I",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 26,
+    "empresa": "Freddy Estrada",
+    "descripcion": "Freddy Estrada | Compras y Bancos 2025",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 27,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Validación III",
+    "tipo": "Validación",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Parte III",
+    "notas": "Validación III",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 28,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Impuestos 2026",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 29,
+    "empresa": "Olmos",
+    "descripcion": "Olmos | Compras y Bancos 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 30,
+    "empresa": "MJC",
+    "descripcion": "MJC | Impuestos 2025-2026",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025-2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 31,
+    "empresa": "Freddy Estrada",
+    "descripcion": "Freddy Estrada | Impuestos 2025",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 32,
+    "empresa": "Olmos",
+    "descripcion": "Olmos | Impuestos 2025",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 33,
+    "empresa": "Global",
+    "descripcion": "Global | Impuestos 2025",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 34,
+    "empresa": "Evaneabel",
+    "descripcion": "Evaneabel | Impuestos 2025",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Izquierda",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 35,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Saga Falabella",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "Saga Falabella",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 36,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Documentos Varios",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 37,
+    "empresa": "Global",
+    "descripcion": "Global | Compras y Bancos 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 38,
+    "empresa": "Global",
+    "descripcion": "Global | Compras y Bancos 2026 Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 39,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | BCP Septiembre",
+    "tipo": "Compras y Bancos",
+    "mes": "Septiembre",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 40,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | BCP Septiembre Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Septiembre",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 41,
+    "empresa": "Johana Dreyfus",
+    "descripcion": "Johana Dreyfus | Compras y Bancos 2026 Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 42,
+    "empresa": "MJC",
+    "descripcion": "MJC | Compras y Bancos Parte 3 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 3",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 43,
+    "empresa": "Henriod",
+    "descripcion": "Henriod | Compras y Bancos Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 44,
+    "empresa": "Henriod",
+    "descripcion": "Henriod | Compras y Bancos Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 45,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Ventas Enero 2026",
+    "tipo": "Ventas",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 46,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Ventas Enero 2026 (duplicado/2da copia)",
+    "tipo": "Ventas",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "Duplicado / 2da copia",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 47,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Marzo Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 48,
+    "empresa": "Amasc",
+    "descripcion": "Amasc | Compras y Bancos Parte 1 2025",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 49,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Marzo 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 50,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Impuesto SUNAT 2025",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2025",
+    "banco": "",
+    "parte": "",
+    "notas": "SUNAT",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 51,
+    "empresa": "Maria Torres",
+    "descripcion": "Maria Torres | Compras y Bancos 2023-2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2023-2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 52,
+    "empresa": "Maria Torres",
+    "descripcion": "Maria Torres | Impuestos 2023-2026",
+    "tipo": "Impuestos",
+    "mes": "Varios",
+    "año": "2023-2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 53,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Documentos Varios (2)",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "Tomo 2",
+    "notas": "Documentos Varios 2",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 54,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Documentos Varios",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 55,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Documentos Varios 2026",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 56,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Ventas Junio 2026",
+    "tipo": "Ventas",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 57,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Ventas Febrero-Marzo 2026",
+    "tipo": "Ventas",
+    "mes": "Febrero-Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 58,
+    "empresa": "Sea Lilly",
+    "descripcion": "Sea Lilly | Estado de Cuenta",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "Estado de Cuenta",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 59,
+    "empresa": "Milly",
+    "descripcion": "Milly | Personal",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "Personal",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 60,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Enero 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 61,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Mayo Scotiabank 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 62,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Mayo Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 63,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Mayo BBVA 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 64,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Febrero 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 65,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Abril Parte 3 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 3",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 66,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Abril Parte 2 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 67,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Abril Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 68,
+    "empresa": "JamDermo",
+    "descripcion": "JamDermo | Compras y Bancos Diciembre Parte 3 2025",
+    "tipo": "Compras y Bancos",
+    "mes": "Diciembre",
+    "año": "2025",
+    "banco": "",
+    "parte": "Parte 3",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 69,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Ventas Mayo 2026",
+    "tipo": "Ventas",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 70,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Ventas Abril 2026",
+    "tipo": "Ventas",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 71,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Ventas Abril 2026 (2da copia)",
+    "tipo": "Ventas",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "2da copia",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 72,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Marzo 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 73,
+    "empresa": "Milly",
+    "descripcion": "Milly | Ventas 04-06",
+    "tipo": "Ventas",
+    "mes": "04-06",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "Meses 04 a 06",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 74,
+    "empresa": "MJC",
+    "descripcion": "MJC | Compras y Bancos Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Derecha",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 75,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Julio Parte 2 Scotiabank 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 76,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Junio Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 77,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Junio Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 78,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Junio Parte 2 Scotiabank 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 79,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Junio BCP 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 80,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Junio BBVA 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 81,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Junio Scotiabank Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Junio",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 82,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Julio Parte 1 BCP 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 83,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Julio Parte 2 BCP 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 84,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Julio Scotiabank 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 85,
+    "empresa": "Alcaba",
+    "descripcion": "Alcaba | Compras y Bancos Julio BBVA 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 86,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Agosto 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Agosto",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 87,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Agosto Interbank Varios",
+    "tipo": "Compras y Bancos",
+    "mes": "Agosto",
+    "año": "2026",
+    "banco": "Interbank",
+    "parte": "",
+    "notas": "Interbank Varios",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 88,
+    "empresa": "Johana Dreyfus",
+    "descripcion": "Johana Dreyfus | Compras y Bancos Marzo 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 89,
+    "empresa": "JamDermo",
+    "descripcion": "JamDermo | Compras y Bancos Enero Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 90,
+    "empresa": "JamDermo",
+    "descripcion": "JamDermo | Compras y Bancos 2da parte 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "2da parte",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 91,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Agosto 2026 Scotiabank",
+    "tipo": "Compras y Bancos",
+    "mes": "Agosto",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 92,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Importación-Constancia pago-Order",
+    "tipo": "Importaciones",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "Constancia de pago - Order",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 93,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Documentos Varios",
+    "tipo": "Documentos Varios",
+    "mes": "Varios",
+    "año": "Varios",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 94,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Tarjeta de Crédito 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "Tarjeta de Crédito",
+    "parte": "",
+    "notas": "Tarjeta de Crédito",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 95,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Scotiabank Julio 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 96,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos BBVA Parte 1 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Varios",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 97,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Agosto 2026 BCP",
+    "tipo": "Compras y Bancos",
+    "mes": "Agosto",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 98,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Julio 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Julio",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 99,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | BBVA Octubre Openpay Jockey",
+    "tipo": "Compras y Bancos",
+    "mes": "Octubre",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "Openpay Jockey",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 100,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | BCP Octubre Culqui",
+    "tipo": "Compras y Bancos",
+    "mes": "Octubre",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "Culqui",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 101,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | BCP Octubre Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Octubre",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 102,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Enero 2026 Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 103,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Enero 2026 Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 104,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Enero 2026 BCP Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 105,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Enero 2026 BCP Parte 2",
+    "tipo": "Compras y Bancos",
+    "mes": "Enero",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 106,
+    "empresa": "Milly",
+    "descripcion": "Milly | Compras y Bancos Febrero Parte 2 Ssoma Varios 2026",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "",
+    "parte": "Parte 2",
+    "notas": "Ssoma Varios",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 107,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Febrero 2026 BBVA Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 108,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Febrero 2026 BCP Parte 1",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 109,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Febrero 2026 BCP Parte 2 (BCP)",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "Parte 2",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 110,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Febrero 2026 Scotiabank Parte 1 (Scotia)",
+    "tipo": "Compras y Bancos",
+    "mes": "Febrero",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "Parte 1",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 111,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Marzo 2026 BCP",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 112,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Marzo 2026 BBVA",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 113,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Marzo 2026 Scoty y otros",
+    "tipo": "Compras y Bancos",
+    "mes": "Marzo",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "Scoty y otros",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 114,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Abril 2026 BCP",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 115,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Abril 2026 BBVA",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 116,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Abril 2026 Scotiabank",
+    "tipo": "Compras y Bancos",
+    "mes": "Abril",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 117,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Mayo 2026 BCP",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "BCP",
+    "parte": "",
+    "notas": "",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 118,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Mayo 2026 BBVA y otros",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "BBVA",
+    "parte": "",
+    "notas": "BBVA y otros",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 119,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Mayo 2026 Scotiabank (Scoty)",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "Scotiabank",
+    "parte": "",
+    "notas": "Scoty",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  },
+  {
+    "id": 120,
+    "empresa": "Ssoma",
+    "descripcion": "Ssoma | Compras y Bancos Mayo 2026 Extras",
+    "tipo": "Compras y Bancos",
+    "mes": "Mayo",
+    "año": "2026",
+    "banco": "",
+    "parte": "",
+    "notas": "Extras",
+    "ubicacion": "Encima",
+    "foto": "",
+    "caja": ""
+  }
+];
+
+    // Refined Editorial Company Palette featuring Avante Gold
+    const COMPANY_COLORS = {
+      "Avante": "#C59B27",  /* Avante Gold */
+      "Ssoma": "#2B5278",
+      "Alcaba": "#315B3E",
+      "Amasc": "#A65324",
+      "MJC": "#7E4783",
+      "Freddy Estrada": "#247177",
+      "Global": "#A8382B",
+      "Evaneabel": "#A24361",
+      "Diana": "#3D4E88",
+      "JamDermo": "#B87514",
+      "Johana Dreyfus": "#1B7885",
+      "Henriod": "#B04D25",
+      "Olmos": "#6B4D3B",
+      "Maria Torres": "#9C3752",
+      "Milly": "#5C6A75",
+      "Sea Lilly": "#32718E",
+      "Importaciones": "#225942"
+    };
+
+    // Refined Document Type Palette
+    const TIPO_COLORS = {
+      "Compras y Bancos": {
+        "bg": "rgba(43, 82, 120, 0.12)",
+        "text": "#2B5278",
+        "border": "#2B5278"
+      },
+      "CyB": {
+        "bg": "rgba(43, 82, 120, 0.12)",
+        "text": "#2B5278",
+        "border": "#2B5278"
+      },
+      "Ventas": {
+        "bg": "rgba(49, 91, 62, 0.12)",
+        "text": "#315B3E",
+        "border": "#315B3E"
+      },
+      "Importaciones": {
+        "bg": "rgba(184, 117, 20, 0.12)",
+        "text": "#B87514",
+        "border": "#B87514"
+      },
+      "Validación": {
+        "bg": "rgba(27, 120, 133, 0.12)",
+        "text": "#1B7885",
+        "border": "#1B7885"
+      },
+      "Impuestos": {
+        "bg": "rgba(168, 56, 43, 0.12)",
+        "text": "#A8382B",
+        "border": "#A8382B"
+      },
+      "Documentos Varios": {
+        "bg": "rgba(126, 71, 131, 0.12)",
+        "text": "#7E4783",
+        "border": "#7E4783"
+      }
+    };
+
+    const UBICACION_COLORS = {
+      "Izquierda": {
+        "bg": "rgba(43, 82, 120, 0.1)",
+        "text": "#2B5278",
+        "border": "#557FA8",
+        "icon": "⬅"
+      },
+      "Derecha": {
+        "bg": "rgba(126, 71, 131, 0.1)",
+        "text": "#7E4783",
+        "border": "#9E68A3",
+        "icon": "➡"
+      },
+      "Encima": {
+        "bg": "rgba(166, 83, 36, 0.1)",
+        "text": "#A65324",
+        "border": "#C77546",
+        "icon": "⬆"
+      },
+      "Almacén": {
+        "bg": "rgba(197, 155, 39, 0.14)",
+        "text": "var(--gold)",
+        "border": "var(--gold)",
+        "icon": "📦"
+      },
+      "Almacen": {
+        "bg": "rgba(197, 155, 39, 0.14)",
+        "text": "var(--gold)",
+        "border": "var(--gold)",
+        "icon": "📦"
+      }
+    };
+
+    // Application State
+    let inventoryData = [];
+    let currentFilteredData = [];
+    let currentView = 'table'; // 'table' | 'cards' | 'boxes'
+    let currentSort = { column: 'id', direction: 'asc' };
+    let deleteTargetId = null;
+    let selectedIds = new Set();
+    let bulkMoveTargetIds = [];
+
+    // Filters State
+    const filters = {
+      search: '',
+      ubicacion: '',
+      caja: '',
+      mes: '',
+      anio: '',
+      banco: '',
+      empresas: new Set(),
+      tipos: new Set()
+    };
+
+    // --- Theme Management (Light / Dark) ---
+    function initTheme() {
+      const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+      setTheme(savedTheme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const target = current === 'light' ? 'dark' : 'light';
+      setTheme(target);
+      showToast(`Modo cambiado a: ${target === 'dark' ? 'Nocturno (Avante Obsidian)' : 'Diurno (Champagne Ivory)'}`);
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
+      const icon = document.getElementById('themeToggleIcon');
+      const label = document.getElementById('themeToggleLabel');
+      if (theme === 'dark') {
+        icon.textContent = '☀️';
+        label.textContent = 'Modo Claro';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Modo Oscuro';
+      }
+    }
+
+    // --- Helpers ---
+    function getCompanyColor(empresa) {
+      return COMPANY_COLORS[empresa] || 'var(--gold)';
+    }
+
+    function hexToRgba(hex, alpha) {
+      if (hex.startsWith('var(')) return 'rgba(197, 155, 39, 0.15)';
+      const cleanHex = hex.replace('#', '');
+      let r = 90, g = 70, b = 55;
+      if (cleanHex.length === 6) {
+        r = parseInt(cleanHex.substring(0, 2), 16);
+        g = parseInt(cleanHex.substring(2, 4), 16);
+        b = parseInt(cleanHex.substring(4, 6), 16);
+      }
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      if (type === 'danger') toast.style.borderLeftColor = '#C0392B';
+      if (type === 'success') toast.style.borderLeftColor = 'var(--gold)';
+
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      toast.title = 'Clic para cerrar notificación';
+
+      toast.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 14 14"/>
+        </svg>
+        <span style="line-height:1.4;">${message}</span>
+      `;
+
+      let isDismissed = false;
+      const dismissToast = () => {
+        if (isDismissed) return;
+        isDismissed = true;
+        toast.classList.remove('toast-visible');
+        toast.classList.add('toast-hiding');
+        setTimeout(() => {
+          if (toast.parentNode) toast.remove();
+        }, 190);
+      };
+
+      toast.addEventListener('click', dismissToast);
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          toast.classList.add('toast-visible');
+        });
+      });
+
+      setTimeout(dismissToast, 3500);
+    }
+
+    // --- Persistence & Migration ---
+    function loadData() {
+      try {
+        let stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) {
+          stored = localStorage.getItem('ARCHIVADORES_INVENTORY_DATA_V1');
+        }
+
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            inventoryData = parsed.map(item => {
+              if (!item.tipo || item.tipo === 'CyB' || item.tipo === 'CYB' || item.tipo.toLowerCase().includes('caja y bancos')) {
+                item.tipo = 'Compras y Bancos';
+              }
+              if (item.descripcion) {
+                item.descripcion = item.descripcion.replace(/\bCyB\b/g, 'Compras y Bancos').replace(/\bCYB\b/g, 'Compras y Bancos');
+              }
+              if ('ao' in item) {
+                item['año'] = item['ao'];
+                delete item['ao'];
+              }
+              if (!item.caja) {
+                if (item.ubicacion && (item.ubicacion.startsWith('Almacén') || item.ubicacion.startsWith('Almacen'))) {
+                  const parts = item.ubicacion.split(/\s+|-|•/);
+                  if (parts.length > 1) {
+                    const possibleCaja = parts.slice(1).join(' ').trim();
+                    if (possibleCaja) {
+                      item.ubicacion = 'Almacén';
+                      item.caja = possibleCaja;
+                    }
+                  }
+                } else {
+                  item.caja = '';
+                }
+              }
+              return item;
+            });
+            saveData();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Error reading from localStorage, using initial dataset:', e);
+      }
+      inventoryData = JSON.parse(JSON.stringify(INITIAL_DATA));
+      saveData();
+    }
+
+    function saveData() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(inventoryData));
+        localStorage.setItem('ARCHIVADORES_INVENTORY_DATA_V1', JSON.stringify(inventoryData));
+      } catch (e) {
+        console.error('Error saving to localStorage:', e);
+        showToast('Error al guardar datos localmente', 'danger');
+      }
+    }
+
+    // --- UI Init ---
+    function init() {
+      initTheme();
+      loadData();
+      populateFilterOptions();
+      populateEmpresasDatalist();
+      populateCajasDatalists();
+      applyFilters();
+    }
+
+    function getCajasList() {
+      const cajas = new Set();
+      inventoryData.forEach(item => {
+        if (item.ubicacion === 'Almacén' && item.caja && item.caja.trim() !== '') {
+          cajas.add(item.caja.trim());
+        }
+      });
+      return Array.from(cajas).sort((a, b) => {
+        return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+      });
+    }
+
+    function populateCajasDatalists() {
+      const cajas = getCajasList();
+      const datalist = document.getElementById('cajasDatalist');
+      datalist.innerHTML = '';
+      cajas.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        datalist.appendChild(opt);
+      });
+
+      const filterCajaSelect = document.getElementById('filterCaja');
+      const currentVal = filterCajaSelect.value;
+      filterCajaSelect.innerHTML = '<option value="">Todas las Cajas de Almacén</option>';
+      cajas.forEach(c => {
+        const count = inventoryData.filter(i => i.ubicacion === 'Almacén' && i.caja === c).length;
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = `📦 Caja ${c} (${count} archivadores)`;
+        if (c === currentVal) opt.selected = true;
+        filterCajaSelect.appendChild(opt);
+      });
+
+      const sinCajaCount = inventoryData.filter(i => i.ubicacion === 'Almacén' && (!i.caja || i.caja.trim() === '')).length;
+      if (sinCajaCount > 0) {
+        const opt = document.createElement('option');
+        opt.value = '__SIN_CAJA__';
+        opt.textContent = `⚠️ Sin caja asignada (${sinCajaCount})`;
+        if (currentVal === '__SIN_CAJA__') opt.selected = true;
+        filterCajaSelect.appendChild(opt);
+      }
+    }
+
+    function populateFilterOptions() {
+      const tipoList = document.getElementById('tipoCheckboxList');
+      tipoList.innerHTML = '';
+      const standardTipos = ["Compras y Bancos", "Ventas", "Importaciones", "Validación", "Impuestos", "Documentos Varios"];
+
+      standardTipos.forEach(tipo => {
+        const count = inventoryData.filter(i => i.tipo === tipo || (tipo === 'Compras y Bancos' && i.tipo === 'CyB')).length;
+        const meta = TIPO_COLORS[tipo] || { border: 'var(--gold)' };
+        const item = document.createElement('div');
+        item.className = 'checkbox-item';
+        item.innerHTML = `
+          <label>
+            <input type="checkbox" value="${tipo}" onchange="handleTipoCheckboxChange(this)" ${filters.tipos.has(tipo) ? 'checked' : ''}>
+            <span class="color-pip" style="background:${meta.border}"></span>
+            <span title="${tipo}">${tipo}</span>
+          </label>
+          <span class="badge-count-dark">${count}</span>
+        `;
+        tipoList.appendChild(item);
+      });
+
+      const empresaList = document.getElementById('empresaCheckboxList');
+      empresaList.innerHTML = '';
+      const empresaCounts = {};
+      inventoryData.forEach(item => {
+        empresaCounts[item.empresa] = (empresaCounts[item.empresa] || 0) + 1;
+      });
+
+      const sortedEmpresas = Object.keys(empresaCounts).sort((a, b) => empresaCounts[b] - empresaCounts[a]);
+
+      sortedEmpresas.forEach(emp => {
+        const count = empresaCounts[emp];
+        const color = getCompanyColor(emp);
+        const item = document.createElement('div');
+        item.className = 'checkbox-item';
+        item.innerHTML = `
+          <label>
+            <input type="checkbox" value="${emp}" onchange="handleEmpresaCheckboxChange(this)" ${filters.empresas.has(emp) ? 'checked' : ''}>
+            <span class="color-pip" style="background:${color}"></span>
+            <span title="${emp}">${emp}</span>
+          </label>
+          <span class="badge-count-dark">${count}</span>
+        `;
+        empresaList.appendChild(item);
+      });
+
+      const anioSelect = document.getElementById('filterAnio');
+      const selectedAnio = anioSelect.value;
+      anioSelect.innerHTML = '<option value="">Todos los Años</option>';
+      const uniqueAnios = Array.from(new Set(inventoryData.map(i => String(i.año || i.ao || '')))).filter(Boolean).sort().reverse();
+      uniqueAnios.forEach(yr => {
+        const option = document.createElement('option');
+        option.value = yr;
+        option.textContent = yr;
+        if (yr === selectedAnio) option.selected = true;
+        anioSelect.appendChild(option);
+      });
+
+      populateCajasDatalists();
+    }
+
+    function populateEmpresasDatalist() {
+      const datalist = document.getElementById('empresasList');
+      datalist.innerHTML = '';
+      const uniqueEmpresas = Array.from(new Set(inventoryData.map(i => i.empresa))).sort();
+      uniqueEmpresas.forEach(emp => {
+        const option = document.createElement('option');
+        option.value = emp;
+        datalist.appendChild(option);
+      });
+    }
+
+    // --- Search & Filters Handling ---
+    function handleSearchInput() {
+      const val = document.getElementById('searchInput').value.trim();
+      filters.search = val.toLowerCase();
+      document.getElementById('searchClearBtn').style.display = val ? 'block' : 'none';
+      applyFilters();
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClearBtn').style.display = 'none';
+      filters.search = '';
+      applyFilters();
+    }
+
+    function handleFilterUbicacionChange() {
+      const ubi = document.getElementById('filterUbicacion').value;
+      filters.ubicacion = ubi;
+      const subWrap = document.getElementById('subfilterCajaWrap');
+      if (ubi === 'Almacén') {
+        subWrap.style.display = 'block';
+      } else {
+        subWrap.style.display = 'none';
+        document.getElementById('filterCaja').value = '';
+        filters.caja = '';
+      }
+      applyFilters();
+    }
+
+    function filterQuickAlmacen() {
+      document.getElementById('filterUbicacion').value = 'Almacén';
+      handleFilterUbicacionChange();
+      switchView('boxes');
+    }
+
+    function handleEmpresaCheckboxChange(cb) {
+      if (cb.checked) {
+        filters.empresas.add(cb.value);
+      } else {
+        filters.empresas.delete(cb.value);
+      }
+      applyFilters();
+    }
+
+    function handleTipoCheckboxChange(cb) {
+      if (cb.checked) {
+        filters.tipos.add(cb.value);
+      } else {
+        filters.tipos.delete(cb.value);
+      }
+      applyFilters();
+    }
+
+    function toggleAllEmpresas(select) {
+      const checkboxes = document.querySelectorAll('#empresaCheckboxList input[type="checkbox"]');
+      filters.empresas.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) filters.empresas.add(cb.value);
+      });
+      applyFilters();
+    }
+
+    function toggleAllTipos(select) {
+      const checkboxes = document.querySelectorAll('#tipoCheckboxList input[type="checkbox"]');
+      filters.tipos.clear();
+      checkboxes.forEach(cb => {
+        cb.checked = select;
+        if (select) filters.tipos.add(cb.value);
+      });
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      filters.search = '';
+      filters.ubicacion = '';
+      filters.caja = '';
+      filters.mes = '';
+      filters.anio = '';
+      filters.banco = '';
+      filters.empresas.clear();
+      filters.tipos.clear();
+
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClearBtn').style.display = 'none';
+      document.getElementById('filterUbicacion').value = '';
+      document.getElementById('subfilterCajaWrap').style.display = 'none';
+      document.getElementById('filterCaja').value = '';
+      document.getElementById('filterMes').value = '';
+      document.getElementById('filterAnio').value = '';
+      document.getElementById('filterBanco').value = '';
+
+      document.querySelectorAll('#empresaCheckboxList input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('#tipoCheckboxList input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+      applyFilters();
+      showToast('Filtros restablecidos');
+    }
+
+    function applyFilters() {
+      filters.ubicacion = document.getElementById('filterUbicacion').value;
+      filters.caja = document.getElementById('filterCaja').value;
+      filters.mes = document.getElementById('filterMes').value;
+      filters.anio = document.getElementById('filterAnio').value;
+      filters.banco = document.getElementById('filterBanco').value;
+
+      currentFilteredData = inventoryData.filter(item => {
+        if (filters.search) {
+          const term = filters.search;
+          const matchTarget = `${item.empresa} ${item.descripcion} ${item.tipo} ${item.notas} ${item.banco} ${item.año} ${item.mes} ${item.ubicacion} ${item.caja}`.toLowerCase();
+          
+          let matches = matchTarget.includes(term);
+          if (!matches && (term === 'cyb' || term.includes('cyb'))) {
+            matches = matchTarget.includes('compras y bancos') || item.tipo === 'Compras y Bancos';
+          }
+          if (!matches) return false;
+        }
+
+        if (filters.ubicacion && item.ubicacion !== filters.ubicacion) {
+          return false;
+        }
+
+        if (filters.ubicacion === 'Almacén' && filters.caja) {
+          if (filters.caja === '__SIN_CAJA__') {
+            if (item.caja && item.caja.trim() !== '') return false;
+          } else {
+            if (item.caja !== filters.caja) return false;
+          }
+        }
+
+        if (filters.tipos.size > 0) {
+          let itemTipo = item.tipo;
+          if (itemTipo === 'CyB') itemTipo = 'Compras y Bancos';
+          if (!filters.tipos.has(itemTipo)) {
+            return false;
+          }
+        }
+
+        if (filters.empresas.size > 0 && !filters.empresas.has(item.empresa)) {
+          return false;
+        }
+
+        if (filters.mes && item.mes !== filters.mes) {
+          return false;
+        }
+
+        if (filters.anio && String(item.año) !== filters.anio) {
+          return false;
+        }
+
+        if (filters.banco) {
+          if (filters.banco === '__SIN_BANCO__') {
+            if (item.banco && item.banco.trim() !== '') return false;
+          } else {
+            if (!item.banco || !item.banco.includes(filters.banco)) return false;
+          }
+        }
+
+        return true;
+      });
+
+      sortFilteredData();
+      renderStats();
+      renderFilterChips();
+      renderData();
+      updateSelectionUI();
+    }
+
+    // --- Sorting ---
+    function handleSort(column) {
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+      sortFilteredData();
+      renderData();
+      updateSortIndicators();
+    }
+
+    function sortFilteredData() {
+      const { column, direction } = currentSort;
+      currentFilteredData.sort((a, b) => {
+        let valA = a[column] || '';
+        let valB = b[column] || '';
+
+        if (column === 'id') {
+          valA = Number(valA);
+          valB = Number(valB);
+        } else if (column === 'ubicacion') {
+          valA = (a.ubicacion || '') + ' ' + (a.caja || '');
+          valB = (b.ubicacion || '') + ' ' + (b.caja || '');
+        } else {
+          valA = String(valA).toLowerCase();
+          valB = String(valB).toLowerCase();
+        }
+
+        if (valA < valB) return direction === 'asc' ? -1 : 1;
+        if (valA > valB) return direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    function updateSortIndicators() {
+      const indicators = document.querySelectorAll('.sort-indicator');
+      indicators.forEach(ind => {
+        ind.textContent = '↕';
+        ind.classList.remove('active');
+      });
+      const currentInd = document.getElementById(`sort-${currentSort.column}`);
+      if (currentInd) {
+        currentInd.textContent = currentSort.direction === 'asc' ? '▲' : '▼';
+        currentInd.classList.add('active');
+      }
+    }
+
+    // --- Render Stats & Chips ---
+    function renderStats() {
+      document.getElementById('statTotalCount').textContent = inventoryData.length;
+      document.getElementById('statFilteredCount').textContent = `${currentFilteredData.length} de ${inventoryData.length}`;
+      document.getElementById('sidebarTotalBadge').textContent = `${inventoryData.length} volúmenes`;
+
+      const uniqueCompanies = new Set(inventoryData.map(i => i.empresa)).size;
+      document.getElementById('statCompaniesCount').textContent = uniqueCompanies;
+
+      const cybCount = inventoryData.filter(i => i.tipo === 'Compras y Bancos' || i.tipo === 'CyB').length;
+      document.getElementById('statDistributionCyB').textContent = cybCount;
+
+      const almacenItems = inventoryData.filter(i => i.ubicacion === 'Almacén');
+      document.getElementById('statAlmacenCount').textContent = almacenItems.length;
+      const cajasCount = getCajasList().length;
+      document.getElementById('statCajasCount').textContent = cajasCount;
+
+      document.getElementById('filteredVisibleCount').textContent = currentFilteredData.length;
+
+      let activeCount = 0;
+      if (filters.search) activeCount++;
+      if (filters.ubicacion) activeCount++;
+      if (filters.caja) activeCount++;
+      if (filters.mes) activeCount++;
+      if (filters.anio) activeCount++;
+      if (filters.banco) activeCount++;
+      activeCount += filters.empresas.size;
+      activeCount += filters.tipos.size;
+      document.getElementById('activeFiltersCount').textContent = activeCount;
+    }
+
+    function renderFilterChips() {
+      const container = document.getElementById('chipsContainer');
+      const bar = document.getElementById('filterChipsBar');
+      container.innerHTML = '';
+
+      let hasFilters = false;
+
+      if (filters.search) {
+        hasFilters = true;
+        addChip(`Búsqueda: "${filters.search}"`, () => clearSearch());
+      }
+      if (filters.ubicacion) {
+        hasFilters = true;
+        addChip(`Ubicación: ${filters.ubicacion}`, () => {
+          document.getElementById('filterUbicacion').value = '';
+          handleFilterUbicacionChange();
+        });
+      }
+      if (filters.caja) {
+        hasFilters = true;
+        const cajaLabel = filters.caja === '__SIN_CAJA__' ? 'Sin Caja' : `Caja ${filters.caja}`;
+        addChip(`Caja: ${cajaLabel}`, () => {
+          document.getElementById('filterCaja').value = '';
+          applyFilters();
+        });
+      }
+      if (filters.mes) {
+        hasFilters = true;
+        addChip(`Mes: ${filters.mes}`, () => {
+          document.getElementById('filterMes').value = '';
+          applyFilters();
+        });
+      }
+      if (filters.anio) {
+        hasFilters = true;
+        addChip(`Año: ${filters.anio}`, () => {
+          document.getElementById('filterAnio').value = '';
+          applyFilters();
+        });
+      }
+      if (filters.banco) {
+        hasFilters = true;
+        const bancoLabel = filters.banco === '__SIN_BANCO__' ? 'Sin Banco' : filters.banco;
+        addChip(`Banco: ${bancoLabel}`, () => {
+          document.getElementById('filterBanco').value = '';
+          applyFilters();
+        });
+      }
+
+      filters.tipos.forEach(t => {
+        hasFilters = true;
+        addChip(`Tipo: ${t}`, () => {
+          filters.tipos.delete(t);
+          const cb = document.querySelector(`#tipoCheckboxList input[value="${t}"]`);
+          if (cb) cb.checked = false;
+          applyFilters();
+        });
+      });
+
+      filters.empresas.forEach(emp => {
+        hasFilters = true;
+        addChip(`Empresa: ${emp}`, () => {
+          filters.empresas.delete(emp);
+          const cb = document.querySelector(`#empresaCheckboxList input[value="${emp}"]`);
+          if (cb) cb.checked = false;
+          applyFilters();
+        });
+      });
+
+      bar.style.display = hasFilters ? 'flex' : 'none';
+    }
+
+    function addChip(text, onRemove) {
+      const chip = document.createElement('div');
+      chip.className = 'filter-chip';
+      chip.innerHTML = `
+        <span>${text}</span>
+        <span class="chip-close">&times;</span>
+      `;
+      chip.querySelector('.chip-close').onclick = onRemove;
+      document.getElementById('chipsContainer').appendChild(chip);
+    }
+
+    // --- Render Views ---
+    function renderData() {
+      const emptyState = document.getElementById('emptyState');
+      const tableView = document.getElementById('tableViewSection');
+      const cardsView = document.getElementById('cardsViewSection');
+      const boxesView = document.getElementById('boxesViewSection');
+
+      if (currentView === 'boxes') {
+        emptyState.style.display = 'none';
+        tableView.style.display = 'none';
+        cardsView.style.display = 'none';
+        boxesView.style.display = 'block';
+        renderBoxes();
+        return;
+      }
+
+      boxesView.style.display = 'none';
+
+      if (currentFilteredData.length === 0) {
+        emptyState.style.display = 'block';
+        tableView.style.display = 'none';
+        cardsView.style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      if (currentView === 'table') {
+        tableView.style.display = 'block';
+        cardsView.style.display = 'none';
+        renderTable();
+      } else if (currentView === 'cards') {
+        tableView.style.display = 'none';
+        cardsView.style.display = 'grid';
+        renderCards();
+      }
+    }
+
+    function formatUbicacionBadge(item) {
+      const isAlmacen = item.ubicacion === 'Almacén' || item.ubicacion === 'Almacen';
+      if (isAlmacen) {
+        const cajaText = item.caja ? ` • Caja ${item.caja}` : '';
+        return `
+          <span class="badge badge-almacen">
+            📦 Almacén${escapeHtml(cajaText)}
+          </span>
+        `;
+      }
+
+      const ubiMeta = UBICACION_COLORS[item.ubicacion] || { bg: 'var(--surface-warm)', text: 'var(--ink-secondary)', border: 'var(--rule-medium)', icon: '📍' };
+      return `
+        <span class="badge badge-ubicacion" style="background:${ubiMeta.bg}; color:${ubiMeta.text}; border-color:${ubiMeta.border};">
+          ${ubiMeta.icon} ${escapeHtml(item.ubicacion || 'Sin Asignar')}
+        </span>
+      `;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      currentFilteredData.forEach(item => {
+        const empColor = getCompanyColor(item.empresa);
+        const empBg = hexToRgba(empColor, 0.12);
+        const tipoMeta = TIPO_COLORS[item.tipo] || { bg: 'var(--surface-warm)', text: 'var(--ink-secondary)', border: 'var(--rule-medium)' };
+        const isSelected = selectedIds.has(item.id);
+
+        const tr = document.createElement('tr');
+        if (isSelected) tr.classList.add('row-selected');
+
+        tr.innerHTML = `
+          <td style="text-align:center;">
+            <input type="checkbox" class="row-checkbox" data-id="${item.id}" ${isSelected ? 'checked' : ''} onchange="toggleItemSelection(${item.id}, this.checked)" style="accent-color:var(--gold); cursor:pointer;">
+          </td>
+          <td class="td-num">#${item.id}</td>
+          <td>
+            <span class="badge badge-empresa" style="background:${empBg}; color:${empColor}; border-color:${empColor};">
+              <span class="color-pip" style="background:${empColor};"></span>
+              ${highlightText(item.empresa, filters.search)}
+            </span>
+          </td>
+          <td class="td-title">${highlightText(item.descripcion, filters.search)}</td>
+          <td>
+            <span class="badge" style="background:${tipoMeta.bg}; color:${tipoMeta.text}; border-color:${tipoMeta.border};">
+              ${item.tipo}
+            </span>
+          </td>
+          <td>${highlightText(item.mes, filters.search)}</td>
+          <td><strong>${highlightText(String(item.año), filters.search)}</strong></td>
+          <td>
+            ${item.banco ? `<span class="badge" style="background:var(--surface-warm); color:var(--ink-primary); border-color:var(--rule-medium);">🏦 ${highlightText(item.banco, filters.search)}</span>` : '<span style="color:var(--ink-tertiary); font-style:italic;">—</span>'}
+          </td>
+          <td>
+            ${formatUbicacionBadge(item)}
+          </td>
+          <td style="text-align:right;">
+            <div style="display:flex; align-items:center; justify-content:flex-end; gap:0.25rem;">
+              <button class="btn-subtle btn-sm" onclick="openEditModal(${item.id})" title="Editar" style="padding:0.25rem 0.4rem; border:1px solid var(--rule-fine);">
+                ✏
+              </button>
+              <button class="btn-subtle btn-sm" onclick="confirmDelete(${item.id})" title="Eliminar" style="padding:0.25rem 0.4rem; border:1px solid var(--rule-fine); color:#C0392B;">
+                🗑
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderCards() {
+      const container = document.getElementById('cardsViewSection');
+      container.innerHTML = '';
+
+      currentFilteredData.forEach(item => {
+        const empColor = getCompanyColor(item.empresa);
+        const empBg = hexToRgba(empColor, 0.12);
+        const tipoMeta = TIPO_COLORS[item.tipo] || { bg: 'var(--surface-warm)', text: 'var(--ink-secondary)', border: 'var(--rule-medium)' };
+        const isSelected = selectedIds.has(item.id);
+
+        const card = document.createElement('div');
+        card.className = 'spine-card';
+        if (isSelected) card.classList.add('card-selected');
+
+        card.innerHTML = `
+          <div class="spine-edge-rule" style="background:${empColor};"></div>
+          
+          <div style="position:absolute; top:1rem; right:1rem; z-index:2;">
+            <input type="checkbox" class="row-checkbox" data-id="${item.id}" ${isSelected ? 'checked' : ''} onchange="toggleItemSelection(${item.id}, this.checked)" style="accent-color:var(--gold); cursor:pointer;">
+          </div>
+
+          <div class="spine-card-header">
+            <span class="badge badge-empresa" style="background:${empBg}; color:${empColor}; border-color:${empColor};">
+              <span class="color-pip" style="background:${empColor};"></span>
+              ${highlightText(item.empresa, filters.search)}
+            </span>
+            ${formatUbicacionBadge(item)}
+          </div>
+
+          <h3 class="spine-card-title">${highlightText(item.descripcion, filters.search)}</h3>
+
+          <div class="spine-tags">
+            <span class="badge" style="background:${tipoMeta.bg}; color:${tipoMeta.text}; border-color:${tipoMeta.border};">
+              ${item.tipo}
+            </span>
+            <span class="spine-meta-pill">📅 ${item.mes} ${item.año}</span>
+            ${item.banco ? `<span class="spine-meta-pill">🏦 ${highlightText(item.banco, filters.search)}</span>` : ''}
+            ${item.parte ? `<span class="spine-meta-pill">📑 ${item.parte}</span>` : ''}
+          </div>
+
+          ${item.notas ? `<div class="spine-card-notes">${highlightText(item.notas, filters.search)}</div>` : ''}
+
+          <div class="spine-card-footer">
+            <span style="font-family:var(--font-serif); font-style:italic; font-size:0.8rem; color:var(--ink-tertiary);">Folio #${item.id}</span>
+            <div style="display:flex; gap:0.35rem;">
+              <button class="btn btn-sm btn-linen" onclick="openEditModal(${item.id})" title="Editar">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger-outline" onclick="confirmDelete(${item.id})" title="Eliminar">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // --- Warehouse Boxes View Logic ---
+    function renderBoxes() {
+      const container = document.getElementById('boxesGridContainer');
+      container.innerHTML = '';
+
+      const almacenItems = inventoryData.filter(i => i.ubicacion === 'Almacén');
+
+      if (almacenItems.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background:var(--surface); border:1px dashed var(--rule-strong); border-radius:var(--radius-md); padding:3.5rem 2rem; text-align:center;">
+            <div style="font-size:2.8rem;">📦</div>
+            <h3 style="font-family:var(--font-serif); font-size:1.3rem; font-weight:600; color:var(--gold); margin-top:0.5rem;">No hay archivadores asignados a Almacén</h3>
+            <p style="font-family:var(--font-serif); font-style:italic; font-size:0.85rem; color:var(--ink-secondary); margin-top:0.25rem;">
+              Puedes trasladar archivadores aquí seleccionándolos y eligiendo "Almacén" y el número de caja (ej. C1, C2).
+            </p>
+            <button class="btn btn-gold" onclick="promptCreateNewBox()" style="margin-top:1rem;">➕ Crear Caja y Asignar Archivadores</button>
+          </div>
+        `;
+        return;
+      }
+
+      const boxGroups = {};
+      almacenItems.forEach(item => {
+        const boxKey = item.caja && item.caja.trim() !== '' ? item.caja.trim() : '__SIN_CAJA__';
+        if (!boxGroups[boxKey]) boxGroups[boxKey] = [];
+        boxGroups[boxKey].push(item);
+      });
+
+      const sortedBoxes = Object.keys(boxGroups).sort((a, b) => {
+        if (a === '__SIN_CAJA__') return 1;
+        if (b === '__SIN_CAJA__') return -1;
+        return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+      });
+
+      sortedBoxes.forEach(boxKey => {
+        const items = boxGroups[boxKey];
+        const isSinCaja = boxKey === '__SIN_CAJA__';
+        const boxName = isSinCaja ? 'Sin Caja Asignada' : `Caja ${boxKey}`;
+
+        const empCount = {};
+        items.forEach(it => {
+          empCount[it.empresa] = (empCount[it.empresa] || 0) + 1;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'kraft-box-card';
+        if (isSinCaja) card.style.borderColor = '#C0392B';
+
+        card.innerHTML = `
+          <div class="kraft-seal-tape"></div>
+          
+          <div class="kraft-box-header">
+            <div class="kraft-box-title" style="${isSinCaja ? 'color:#C0392B;' : ''}">
+              <span>${isSinCaja ? '⚠️' : '📦'}</span>
+              <span>${escapeHtml(boxName)}</span>
+            </div>
+            <span class="kraft-box-count" style="${isSinCaja ? 'background:rgba(192, 57, 43, 0.1); color:#C0392B; border-color:#C0392B;' : ''}">
+              ${items.length} volumen${items.length === 1 ? '' : 'es'}
+            </span>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.35rem;">
+            ${Object.keys(empCount).map(emp => {
+              const color = getCompanyColor(emp);
+              const bg = hexToRgba(color, 0.12);
+              return `
+                <span class="badge" style="background:${bg}; color:${color}; border-color:${color}; font-size:0.68rem; padding:0.15rem 0.5rem;">
+                  <span class="color-pip" style="background:${color};"></span>
+                  ${escapeHtml(emp)} (${empCount[emp]})
+                </span>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="kraft-items-list">
+            ${items.map(it => `
+              <div class="kraft-item-row">
+                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:235px; font-family:var(--font-serif);">
+                  <strong style="color:var(--ink-primary);">#${it.id}</strong> ${escapeHtml(it.descripcion)}
+                </div>
+                <span style="font-size:0.68rem; color:var(--gold); font-weight:600; flex-shrink:0;">${escapeHtml(it.tipo)}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:0.6rem; border-top:1px dashed var(--rule-medium); gap:0.4rem; flex-wrap:wrap;">
+            <div style="display:flex; gap:0.35rem;">
+              <button type="button" class="btn btn-sm btn-linen" onclick="filterBySpecificBox('${isSinCaja ? '__SIN_CAJA__' : escapeHtml(boxKey)}')" title="Ver archivadores de esta caja en tabla">
+                🔍 Ver
+              </button>
+              <button type="button" class="btn btn-sm btn-linen" onclick="openBoxLabelModal('${isSinCaja ? '__SIN_CAJA__' : escapeHtml(boxKey)}')" title="Descargar o imprimir etiqueta de custodia en PDF">
+                🏷️ Etiqueta PDF
+              </button>
+            </div>
+            ${selectedIds.size > 0 ? `
+              <button type="button" class="btn btn-sm btn-gold" onclick="assignSelectedToBox('${isSinCaja ? '' : escapeHtml(boxKey)}')">
+                📥 Guardar ${selectedIds.size} aquí
+              </button>
+            ` : `
+              <button type="button" class="btn btn-sm btn-subtle" onclick="promptMoveAllBoxItems('${isSinCaja ? '' : escapeHtml(boxKey)}')">
+                Mover lote
+              </button>
+            `}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function filterBySpecificBox(cajaKey) {
+      document.getElementById('filterUbicacion').value = 'Almacén';
+      document.getElementById('subfilterCajaWrap').style.display = 'block';
+      document.getElementById('filterCaja').value = cajaKey;
+      switchView('table');
+      applyFilters();
+      showToast(`Filtrando Almacén por: ${cajaKey === '__SIN_CAJA__' ? 'Sin Caja' : 'Caja ' + cajaKey}`);
+    }
+
+    function assignSelectedToBox(cajaName) {
+      if (selectedIds.size === 0) return;
+      let count = 0;
+      inventoryData.forEach(item => {
+        if (selectedIds.has(item.id)) {
+          item.ubicacion = 'Almacén';
+          item.caja = cajaName;
+          count++;
+        }
+      });
+      saveData();
+      populateFilterOptions();
+      applyFilters();
+      clearSelection();
+      showToast(`Se trasladaron ${count} archivadores a Almacén • Caja "${cajaName}"`, 'success');
+    }
+
+    function promptCreateNewBox() {
+      const newBox = prompt('Ingresa el identificador de la caja (ejemplo: C1, C2, Caja 5):');
+      if (newBox && newBox.trim() !== '') {
+        const boxName = newBox.trim();
+        if (selectedIds.size > 0) {
+          assignSelectedToBox(boxName);
+        } else {
+          openBulkMoveModal(true);
+          document.getElementById('bulkModalTargetUbicacion').value = 'Almacén';
+          handleBulkModalUbicacionChange();
+          document.getElementById('bulkModalCajaInput').value = boxName;
+        }
+      }
+    }
+
+    function promptMoveAllBoxItems(currentBoxName) {
+      const targetItems = inventoryData.filter(i => i.ubicacion === 'Almacén' && (currentBoxName ? i.caja === currentBoxName : !i.caja));
+      if (targetItems.length === 0) return;
+      bulkMoveTargetIds = targetItems.map(i => i.id);
+      document.getElementById('bulkMoveDescription').innerHTML = `Traslado de lote completo para los <strong>${targetItems.length} archivadores</strong> de la Caja "${currentBoxName || 'Sin Caja'}".`;
+      
+      const previewList = document.getElementById('bulkMovePreviewList');
+      previewList.innerHTML = '';
+      targetItems.slice(0, 10).forEach(item => {
+        const row = document.createElement('div');
+        row.style.padding = '2px 0';
+        row.textContent = `#${item.id} — ${item.empresa}: ${item.descripcion}`;
+        previewList.appendChild(row);
+      });
+
+      document.getElementById('bulkModalTargetUbicacion').value = 'Almacén';
+      handleBulkModalUbicacionChange();
+      document.getElementById('bulkModalCajaInput').value = currentBoxName;
+      document.getElementById('bulkMoveModal').classList.add('active');
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.getElementById('btnViewTable').classList.toggle('active', view === 'table');
+      document.getElementById('btnViewCards').classList.toggle('active', view === 'cards');
+      const btnBoxes = document.getElementById('btnViewBoxes');
+      btnBoxes.classList.toggle('active', view === 'boxes');
+      renderData();
+    }
+
+    function highlightText(text, term) {
+      if (!term || !text) return escapeHtml(text || '');
+      const str = String(text);
+      try {
+        const regex = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+        return escapeHtml(str).replace(regex, '<mark class="highlight">$1</mark>');
+      } catch (e) {
+        return escapeHtml(str);
+      }
+    }
+
+    // --- Selection Handling ---
+    function toggleItemSelection(id, isSelected) {
+      if (isSelected) {
+        selectedIds.add(id);
+      } else {
+        selectedIds.delete(id);
+      }
+      updateSelectionUI();
+      if (currentView === 'boxes') renderBoxes();
+    }
+
+    function toggleSelectAllVisible(checked) {
+      if (checked) {
+        currentFilteredData.forEach(item => selectedIds.add(item.id));
+      } else {
+        currentFilteredData.forEach(item => selectedIds.delete(item.id));
+      }
+      updateSelectionUI();
+      renderData();
+    }
+
+    function clearSelection() {
+      selectedIds.clear();
+      updateSelectionUI();
+      renderData();
+    }
+
+    function updateSelectionUI() {
+      const count = selectedIds.size;
+      document.getElementById('selectedCountNumber').textContent = count;
+      document.getElementById('moveSelectedCount').textContent = count;
+      document.getElementById('floatSelectedCount').textContent = `${count} seleccionados`;
+
+      const btnMove = document.getElementById('btnMoveSelected');
+      const btnClear = document.getElementById('btnClearSelection');
+      const floatBar = document.getElementById('floatingBulkBar');
+
+      if (count > 0) {
+        btnMove.style.display = 'inline-flex';
+        btnClear.style.display = 'inline-flex';
+        floatBar.classList.add('active');
+      } else {
+        btnMove.style.display = 'none';
+        btnClear.style.display = 'none';
+        floatBar.classList.remove('active');
+      }
+
+      const headerCb = document.getElementById('headerCheckbox');
+      const selectAllCb = document.getElementById('selectAllCheckbox');
+      const allVisibleSelected = currentFilteredData.length > 0 && currentFilteredData.every(i => selectedIds.has(i.id));
+
+      if (headerCb) headerCb.checked = allVisibleSelected;
+      if (selectAllCb) selectAllCb.checked = allVisibleSelected;
+    }
+
+    // Bulk Move Modal
+    function openBulkMoveModal(allFiltered = false) {
+      if (allFiltered) {
+        if (currentFilteredData.length === 0) {
+          showToast('No hay archivadores visibles para mover', 'danger');
+          return;
+        }
+        bulkMoveTargetIds = currentFilteredData.map(i => i.id);
+        document.getElementById('bulkMoveDescription').innerHTML = `Traslado físico para los <strong>${bulkMoveTargetIds.length} archivadores filtrados</strong> actualmente.`;
+      } else {
+        if (selectedIds.size === 0) {
+          showToast('Selecciona al menos un archivador', 'danger');
+          return;
+        }
+        bulkMoveTargetIds = Array.from(selectedIds);
+        document.getElementById('bulkMoveDescription').innerHTML = `Traslado físico para <strong>${bulkMoveTargetIds.length} archivadores seleccionados</strong>.`;
+      }
+
+      const previewList = document.getElementById('bulkMovePreviewList');
+      previewList.innerHTML = '';
+      const sampleItems = inventoryData.filter(i => bulkMoveTargetIds.includes(i.id)).slice(0, 15);
+      sampleItems.forEach(item => {
+        const row = document.createElement('div');
+        row.style.padding = '2px 0';
+        row.textContent = `#${item.id} — ${item.empresa}: ${item.descripcion}`;
+        previewList.appendChild(row);
+      });
+      if (bulkMoveTargetIds.length > 15) {
+        const more = document.createElement('div');
+        more.style.fontStyle = 'italic';
+        more.style.color = 'var(--ink-tertiary)';
+        more.textContent = `... y ${bulkMoveTargetIds.length - 15} archivadores adicionales.`;
+        previewList.appendChild(more);
+      }
+
+      document.getElementById('bulkModalTargetUbicacion').value = 'Izquierda';
+      document.getElementById('bulkModalCustomWrap').style.display = 'none';
+      document.getElementById('bulkModalCajaWrap').style.display = 'none';
+      document.getElementById('bulkModalCustomUbicacion').value = '';
+      document.getElementById('bulkModalCajaInput').value = '';
+      document.getElementById('bulkMoveModal').classList.add('active');
+    }
+
+    function closeBulkMoveModal() {
+      document.getElementById('bulkMoveModal').classList.remove('active');
+    }
+
+    function handleBulkBackdropClick(e) {
+      if (e.target.id === 'bulkMoveModal') closeBulkMoveModal();
+    }
+
+    function handleBulkModalUbicacionChange() {
+      const val = document.getElementById('bulkModalTargetUbicacion').value;
+      document.getElementById('bulkModalCustomWrap').style.display = val === '__CUSTOM__' ? 'block' : 'none';
+      document.getElementById('bulkModalCajaWrap').style.display = val === 'Almacén' ? 'block' : 'none';
+
+      if (val === '__CUSTOM__') {
+        document.getElementById('bulkModalCustomUbicacion').focus();
+      } else if (val === 'Almacén') {
+        document.getElementById('bulkModalCajaInput').focus();
+      }
+    }
+
+    function confirmExecuteBulkMove() {
+      let targetUbicacion = document.getElementById('bulkModalTargetUbicacion').value;
+      let targetCaja = '';
+
+      if (targetUbicacion === '__CUSTOM__') {
+        targetUbicacion = document.getElementById('bulkModalCustomUbicacion').value.trim();
+        if (!targetUbicacion) {
+          showToast('Ingresa el nombre de la ubicación', 'danger');
+          return;
+        }
+      } else if (targetUbicacion === 'Almacén') {
+        targetCaja = document.getElementById('bulkModalCajaInput').value.trim();
+      }
+
+      let count = 0;
+      inventoryData.forEach(item => {
+        if (bulkMoveTargetIds.includes(item.id)) {
+          item.ubicacion = targetUbicacion;
+          item.caja = targetUbicacion === 'Almacén' ? targetCaja : '';
+          count++;
+        }
+      });
+
+      saveData();
+      populateFilterOptions();
+      applyFilters();
+      clearSelection();
+      closeBulkMoveModal();
+
+      const cajaText = targetCaja ? ` • Caja "${targetCaja}"` : '';
+      showToast(`Traslado completado: ${count} archivadores a "${targetUbicacion}${cajaText}"`, 'success');
+    }
+
+    // Floating Bar Quick Move
+    function handleFloatUbicacionChange() {
+      const val = document.getElementById('floatUbicacionSelect').value;
+      const customInput = document.getElementById('floatCustomUbicacion');
+      const cajaWrap = document.getElementById('floatAlmacenCajaWrap');
+
+      customInput.style.display = val === '__CUSTOM__' ? 'inline-block' : 'none';
+      cajaWrap.style.display = val === 'Almacén' ? 'inline-block' : 'none';
+
+      if (val === '__CUSTOM__') customInput.focus();
+      if (val === 'Almacén') document.getElementById('floatCajaInput').focus();
+    }
+
+    function applyFloatBulkMove() {
+      if (selectedIds.size === 0) return;
+      let targetUbi = document.getElementById('floatUbicacionSelect').value;
+      let targetCaja = '';
+
+      if (targetUbi === '__CUSTOM__') {
+        targetUbi = document.getElementById('floatCustomUbicacion').value.trim();
+        if (!targetUbi) {
+          showToast('Ingresa la nueva ubicación', 'danger');
+          return;
+        }
+      } else if (targetUbi === 'Almacén') {
+        targetCaja = document.getElementById('floatCajaInput').value.trim();
+      }
+
+      let count = 0;
+      inventoryData.forEach(item => {
+        if (selectedIds.has(item.id)) {
+          item.ubicacion = targetUbi;
+          item.caja = targetUbi === 'Almacén' ? targetCaja : '';
+          count++;
+        }
+      });
+
+      saveData();
+      populateFilterOptions();
+      applyFilters();
+      clearSelection();
+
+      const cajaText = targetCaja ? ` • Caja "${targetCaja}"` : '';
+      showToast(`Traslado completado a "${targetUbi}${cajaText}" para ${count} archivadores`, 'success');
+    }
+
+    // --- Description Auto-generation ---
+    function onFormFieldChange() {
+      const autoCheckbox = document.getElementById('autoUpdateDescCheckbox');
+      if (autoCheckbox && autoCheckbox.checked) {
+        generateAutoDescription(false);
+      }
+    }
+
+    function onDescriptionManualInput() {
+      const autoCheckbox = document.getElementById('autoUpdateDescCheckbox');
+      if (autoCheckbox) {
+        autoCheckbox.checked = false;
+      }
+    }
+
+    function generateAutoDescription(force = false) {
+      const autoCheckbox = document.getElementById('autoUpdateDescCheckbox');
+      if (!force && autoCheckbox && !autoCheckbox.checked) return;
+
+      const empresa = document.getElementById('formEmpresa').value.trim();
+      const tipo = document.getElementById('formTipo').value.trim();
+      const mes = document.getElementById('formMes').value.trim();
+      const anio = document.getElementById('formAnio').value.trim();
+      const banco = document.getElementById('formBanco').value.trim();
+      const parte = document.getElementById('formParte').value.trim();
+      const notas = document.getElementById('formNotas').value.trim();
+
+      if (!empresa && !tipo && !force) return;
+
+      let docDetails = [];
+      if (tipo) docDetails.push(tipo);
+      if (mes && mes !== 'Varios' && mes !== 'No especificado') docDetails.push(mes);
+      if (anio) docDetails.push(anio);
+      if (banco) docDetails.push(banco);
+      if (parte) docDetails.push(parte);
+
+      const parts = [];
+      if (empresa) parts.push(empresa);
+      if (docDetails.length > 0) parts.push(docDetails.join(' '));
+      if (notas) parts.push(notas);
+
+      const result = parts.join(' | ');
+      if (result) {
+        document.getElementById('formDescripcion').value = result;
+      }
+    }
+
+    // --- Modal Management ---
+    function handleFormUbicacionChange() {
+      const ubi = document.getElementById('formUbicacion').value;
+      const cajaGroup = document.getElementById('formCajaGroup');
+      if (ubi === 'Almacén') {
+        cajaGroup.style.display = 'flex';
+        document.getElementById('formCaja').focus();
+      } else {
+        cajaGroup.style.display = 'none';
+      }
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Nuevo Registro de Archivador';
+      document.getElementById('modalSubmitBtn').textContent = 'Guardar Volumen';
+      document.getElementById('archivadorForm').reset();
+      document.getElementById('formId').value = '';
+      document.getElementById('formUbicacion').value = 'Izquierda';
+      document.getElementById('formCajaGroup').style.display = 'none';
+      document.getElementById('formCaja').value = '';
+      document.getElementById('formTipo').value = 'Compras y Bancos';
+      document.getElementById('formMes').value = 'Varios';
+      document.getElementById('formAnio').value = new Date().getFullYear();
+      document.getElementById('autoUpdateDescCheckbox').checked = true;
+      document.getElementById('archivadorModal').classList.add('active');
+      document.getElementById('formEmpresa').focus();
+    }
+
+    function openEditModal(id) {
+      const item = inventoryData.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById('modalTitle').textContent = `Editar Archivador #${item.id}`;
+      document.getElementById('modalSubmitBtn').textContent = 'Guardar Cambios';
+      document.getElementById('formId').value = item.id;
+      document.getElementById('formEmpresa').value = item.empresa || '';
+      document.getElementById('formDescripcion').value = item.descripcion || '';
+      
+      let tipoVal = item.tipo || 'Compras y Bancos';
+      if (tipoVal === 'CyB') tipoVal = 'Compras y Bancos';
+      document.getElementById('formTipo').value = tipoVal;
+
+      document.getElementById('formMes').value = item.mes || 'Varios';
+      document.getElementById('formAnio').value = item.año || '';
+      document.getElementById('formBanco').value = item.banco || '';
+      document.getElementById('formParte').value = item.parte || '';
+
+      const ubiVal = item.ubicacion || 'Izquierda';
+      document.getElementById('formUbicacion').value = ubiVal;
+      
+      const cajaGroup = document.getElementById('formCajaGroup');
+      if (ubiVal === 'Almacén') {
+        cajaGroup.style.display = 'flex';
+        document.getElementById('formCaja').value = item.caja || '';
+      } else {
+        cajaGroup.style.display = 'none';
+        document.getElementById('formCaja').value = '';
+      }
+
+      document.getElementById('formNotas').value = item.notas || '';
+      document.getElementById('autoUpdateDescCheckbox').checked = false;
+      document.getElementById('archivadorModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('archivadorModal').classList.remove('active');
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.id === 'archivadorModal') closeModal();
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const idVal = document.getElementById('formId').value;
+      const empresa = document.getElementById('formEmpresa').value.trim();
+      let descripcion = document.getElementById('formDescripcion').value.trim();
+      let tipo = document.getElementById('formTipo').value;
+      if (tipo === 'CyB') tipo = 'Compras y Bancos';
+
+      const mes = document.getElementById('formMes').value;
+      const anio = document.getElementById('formAnio').value.trim() || '2026';
+      const banco = document.getElementById('formBanco').value;
+      const parte = document.getElementById('formParte').value.trim();
+      const ubicacion = document.getElementById('formUbicacion').value;
+      const caja = ubicacion === 'Almacén' ? document.getElementById('formCaja').value.trim() : '';
+      const notas = document.getElementById('formNotas').value.trim();
+
+      if (!empresa) {
+        showToast('Empresa es un campo obligatorio', 'danger');
+        return;
+      }
+
+      if (!descripcion) {
+        generateAutoDescription(true);
+        descripcion = document.getElementById('formDescripcion').value.trim();
+      }
+
+      if (idVal) {
+        const targetId = Number(idVal);
+        const index = inventoryData.findIndex(i => i.id === targetId);
+        if (index !== -1) {
+          inventoryData[index] = {
+            ...inventoryData[index],
+            empresa,
+            descripcion,
+            tipo,
+            mes,
+            año: anio,
+            banco,
+            parte,
+            ubicacion,
+            caja,
+            notas
+          };
+          saveData();
+          populateFilterOptions();
+          populateEmpresasDatalist();
+          applyFilters();
+          closeModal();
+          showToast(`Archivador #${targetId} actualizado correctamente`, 'success');
+        }
+      } else {
+        const newId = inventoryData.length > 0 ? Math.max(...inventoryData.map(i => i.id)) + 1 : 1;
+        const newItem = {
+          id: newId,
+          empresa,
+          descripcion,
+          tipo,
+          mes,
+          año: anio,
+          banco,
+          parte,
+          notas,
+          ubicacion,
+          caja,
+          foto: ''
+        };
+        inventoryData.push(newItem);
+        saveData();
+        populateFilterOptions();
+        populateEmpresasDatalist();
+        applyFilters();
+        closeModal();
+        showToast(`Archivador #${newId} registrado con éxito`, 'success');
+      }
+    }
+
+    // --- Delete Confirmation Modal ---
+    function confirmDelete(id) {
+      const item = inventoryData.find(i => i.id === id);
+      if (!item) return;
+      deleteTargetId = id;
+      document.getElementById('deleteConfirmDesc').innerHTML = `¿Confirmas eliminar el archivador <strong>Folio #${item.id} — ${escapeHtml(item.descripcion)}</strong> de la custodia?`;
+      document.getElementById('confirmDeleteBtn').onclick = executeDelete;
+      document.getElementById('deleteConfirmModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteConfirmModal').classList.remove('active');
+      deleteTargetId = null;
+    }
+
+    function executeDelete() {
+      if (deleteTargetId !== null) {
+        inventoryData = inventoryData.filter(i => i.id !== deleteTargetId);
+        selectedIds.delete(deleteTargetId);
+        saveData();
+        populateFilterOptions();
+        populateEmpresasDatalist();
+        applyFilters();
+        showToast(`Archivador #${deleteTargetId} eliminado`, 'danger');
+        closeDeleteModal();
+      }
+    }
+
+    // --- Reset Initial Data ---
+    function promptResetInitialData() {
+      document.getElementById('resetConfirmModal').classList.add('active');
+    }
+
+    function closeResetModal() {
+      document.getElementById('resetConfirmModal').classList.remove('active');
+    }
+
+    function confirmResetInitialData() {
+      inventoryData = JSON.parse(JSON.stringify(INITIAL_DATA));
+      selectedIds.clear();
+      saveData();
+      populateFilterOptions();
+      populateEmpresasDatalist();
+      applyFilters();
+      closeResetModal();
+      showToast('Dataset original restaurado (120 archivadores)', 'success');
+    }
+
+    // --- Export to CSV (UTF-8 BOM) ---
+    function exportToCSV() {
+      const dataToExport = currentFilteredData.length > 0 ? currentFilteredData : inventoryData;
+      const headers = ['Folio', 'Empresa', 'Descripcion', 'Tipo', 'Periodo_Mes', 'Año', 'Entidad_Bancaria', 'Parte', 'Ubicacion', 'Caja_Almacen', 'Anotaciones'];
+
+      let csvContent = '\uFEFF';
+      csvContent += headers.map(h => `"${h}"`).join(',') + '\r\n';
+
+      dataToExport.forEach(item => {
+        const row = [
+          item.id,
+          item.empresa || '',
+          item.descripcion || '',
+          item.tipo || '',
+          item.mes || '',
+          item.año || '',
+          item.banco || '',
+          item.parte || '',
+          item.ubicacion || '',
+          item.caja || '',
+          item.notas || ''
+        ];
+        csvContent += row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(',') + '\r\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `registro_archivadores_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast(`Exportados ${dataToExport.length} registros a CSV`, 'success');
+    }
+
+    // --- Mobile Sidebar Toggle ---
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('open');
+      backdrop.classList.toggle('active');
+    }
+
+    
+    // ==========================================================================
+    // BOX LABEL & PRINTABLE PDF LOGIC
+    // ==========================================================================
+    let currentLabelBoxKey = '';
+
+    function openBoxLabelModal(targetBoxKey = '') {
+      currentLabelBoxKey = targetBoxKey;
+      populateLabelBoxesSelect();
+      if (targetBoxKey) {
+        document.getElementById('labelBoxSelect').value = targetBoxKey;
+      }
+      updateBoxLabelPreview();
+      document.getElementById('boxLabelModal').classList.add('active');
+    }
+
+    function closeBoxLabelModal() {
+      document.getElementById('boxLabelModal').classList.remove('active');
+    }
+
+    function handleLabelBackdropClick(e) {
+      if (e.target.id === 'boxLabelModal') closeBoxLabelModal();
+    }
+
+    function populateLabelBoxesSelect() {
+      const select = document.getElementById('labelBoxSelect');
+      select.innerHTML = '';
+
+      const almacenItems = inventoryData.filter(i => i.ubicacion === 'Almacén');
+      const boxKeys = new Set();
+      let hasSinCaja = false;
+
+      almacenItems.forEach(item => {
+        if (item.caja && item.caja.trim() !== '') {
+          boxKeys.add(item.caja.trim());
+        } else {
+          hasSinCaja = true;
+        }
+      });
+
+      const sorted = Array.from(boxKeys).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+      // Option: All boxes
+      const optAll = document.createElement('option');
+      optAll.value = '__TODAS__';
+      optAll.textContent = `📚 Todas las Cajas (${sorted.length + (hasSinCaja ? 1 : 0)} etiquetas • 1 por página)`;
+      select.appendChild(optAll);
+
+      sorted.forEach(c => {
+        const count = almacenItems.filter(i => i.caja === c).length;
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = `📦 Caja ${c} (${count} archivadores)`;
+        select.appendChild(opt);
+      });
+
+      if (hasSinCaja) {
+        const count = almacenItems.filter(i => !i.caja || i.caja.trim() === '').length;
+        const opt = document.createElement('option');
+        opt.value = '__SIN_CAJA__';
+        opt.textContent = `⚠️ Sin Caja Asignada (${count} archivadores)`;
+        select.appendChild(opt);
+      }
+    }
+
+    function onLabelConfigChange() {
+      currentLabelBoxKey = document.getElementById('labelBoxSelect').value;
+      updateBoxLabelPreview();
+    }
+
+    function getLabelConfig() {
+      return {
+        boxKey: document.getElementById('labelBoxSelect').value || '__TODAS__',
+        size: document.getElementById('labelSizeSelect').value || 'a4',
+        cols: document.getElementById('labelColsSelect').value || '1',
+        fontSize: document.getElementById('labelFontSelect').value || 'md',
+        showHeader: document.getElementById('labelOptHeader').checked,
+        showMeta: document.getElementById('labelOptMeta').checked,
+        showSign: document.getElementById('labelOptSign').checked,
+        showBorder: document.getElementById('labelOptBorder').checked
+      };
+    }
+
+    function updateBoxLabelPreview() {
+      const config = getLabelConfig();
+      const container = document.getElementById('labelPreviewInner');
+
+      const almacenItems = inventoryData.filter(i => i.ubicacion === 'Almacén');
+      let html = '';
+
+      if (config.boxKey === '__TODAS__') {
+        const boxKeys = new Set();
+        let hasSinCaja = false;
+        almacenItems.forEach(i => {
+          if (i.caja && i.caja.trim() !== '') boxKeys.add(i.caja.trim());
+          else hasSinCaja = true;
+        });
+        const sorted = Array.from(boxKeys).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        if (hasSinCaja) sorted.push('__SIN_CAJA__');
+
+        if (sorted.length === 0) {
+          container.innerHTML = '<div style="color:#FFF; text-align:center; padding:2rem;">No hay archivadores asignados a Almacén.</div>';
+          return;
+        }
+
+        sorted.forEach((k, idx) => {
+          html += generateSingleLabelHTML(k, config, idx < sorted.length - 1);
+        });
+      } else {
+        html = generateSingleLabelHTML(config.boxKey, config, false);
+      }
+
+      container.innerHTML = html;
+    }
+
+    function generateSingleLabelHTML(boxKey, config, hasPageBreak = false) {
+      const isSinCaja = boxKey === '__SIN_CAJA__';
+      const items = inventoryData.filter(i => {
+        if (i.ubicacion !== 'Almacén') return false;
+        if (isSinCaja) return !i.caja || i.caja.trim() === '';
+        return i.caja === boxKey;
+      });
+
+      const boxTitle = isSinCaja ? 'SIN CAJA ASIGNADA' : `CAJA ${boxKey.toUpperCase()}`;
+      const qtyText = `${items.length} ARCHIVADOR${items.length === 1 ? '' : 'ES'}`;
+
+      // Calculate companies and years summary
+      const empSet = new Set();
+      const yearsSet = new Set();
+      const typesSet = new Set();
+
+      items.forEach(it => {
+        if (it.empresa) empSet.add(it.empresa);
+        if (it.año) yearsSet.add(it.año);
+        if (it.tipo) typesSet.add(it.tipo);
+      });
+
+      const empSummary = Array.from(empSet).join(', ') || 'Varios';
+      const yearsSummary = Array.from(yearsSet).sort().join(' - ') || '2026';
+      const typesSummary = Array.from(typesSet).join(' • ') || 'Compras y Bancos';
+
+      const today = new Date();
+      const dateFormatted = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+      // Table items
+      let tableRows = '';
+      if (config.cols === '2') {
+        const half = Math.ceil(items.length / 2);
+        const col1 = items.slice(0, half);
+        const col2 = items.slice(half);
+
+        const renderMiniTable = (subItems) => `
+          <table class="plabel-table">
+            <thead>
+              <tr>
+                <th style="width:42px;">FOLIO</th>
+                <th>EMPRESA / CONTENIDO</th>
+                <th style="width:45px;">AÑO</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${subItems.map(it => `
+                <tr>
+                  <td class="plabel-td-folio">#${it.id}</td>
+                  <td>
+                    <div style="font-weight:700; color:#090F1B;">${escapeHtml(it.empresa)}</div>
+                    <div style="font-size:0.9em; color:#475569;">${escapeHtml(it.descripcion)}</div>
+                  </td>
+                  <td style="text-align:center; font-weight:600;">${escapeHtml(it.año || '')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+
+        tableRows = `
+          <div class="plabel-grid-2col">
+            <div>${renderMiniTable(col1)}</div>
+            <div>${renderMiniTable(col2)}</div>
+          </div>
+        `;
+      } else {
+        tableRows = `
+          <table class="plabel-table">
+            <thead>
+              <tr>
+                <th style="width:45px;">FOLIO</th>
+                <th style="width:25%;">EMPRESA</th>
+                <th>DESCRIPCIÓN DEL ARCHIVADOR</th>
+                <th style="width:22%;">TIPO DOCUMENTO</th>
+                <th style="width:50px; text-align:center;">AÑO</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${items.map(it => `
+                <tr>
+                  <td class="plabel-td-folio">#${it.id}</td>
+                  <td style="font-weight:700; color:#090F1B;">${escapeHtml(it.empresa)}</td>
+                  <td>${escapeHtml(it.descripcion)}</td>
+                  <td style="font-size:0.9em; color:#B38622; font-weight:600;">${escapeHtml(it.tipo)}</td>
+                  <td style="text-align:center; font-weight:600;">${escapeHtml(it.año || '')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      return `
+        <div class="print-box-sheet sheet-${config.size} plabel-font-${config.fontSize} ${hasPageBreak ? 'print-page-break' : ''}" style="margin-bottom:1.5rem;">
+          <div class="plabel-border-frame ${config.showBorder ? 'plabel-cut-guide' : ''}">
+            
+            ${config.showHeader ? `
+              <div class="plabel-header">
+                <div class="plabel-brand">
+                  <div class="plabel-logo">A</div>
+                  <div>
+                    <div class="plabel-company-name">AVANTE CONSULTORES</div>
+                    <div class="plabel-company-sub">SISTEMA DE ARCHIVO FÍSICO & CUSTODIA DOCUMENTAL</div>
+                  </div>
+                </div>
+                <div class="plabel-box-badge">
+                  <div class="plabel-box-title">${escapeHtml(boxTitle)}</div>
+                  <div class="plabel-box-qty">${escapeHtml(qtyText)}</div>
+                </div>
+              </div>
+            ` : `
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0D1627; padding-bottom:0.6rem; margin-bottom:0.75rem;">
+                <div class="plabel-box-title">${escapeHtml(boxTitle)}</div>
+                <div class="plabel-box-qty">${escapeHtml(qtyText)}</div>
+              </div>
+            `}
+
+            ${config.showMeta ? `
+              <div class="plabel-meta-grid">
+                <div class="plabel-meta-cell">
+                  <span class="plabel-meta-label">Empresas en Custodia</span>
+                  <span class="plabel-meta-val" title="${escapeHtml(empSummary)}">${escapeHtml(empSummary)}</span>
+                </div>
+                <div class="plabel-meta-cell">
+                  <span class="plabel-meta-label">Ejercicio / Periodo</span>
+                  <span class="plabel-meta-val">${escapeHtml(yearsSummary)}</span>
+                </div>
+                <div class="plabel-meta-cell">
+                  <span class="plabel-meta-label">Ubicación de Archivo</span>
+                  <span class="plabel-meta-val">ALMACÉN • ${escapeHtml(boxTitle)}</span>
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Table or 2-col content -->
+            <div style="flex-grow:1;">
+              ${tableRows}
+            </div>
+
+            ${config.showSign ? `
+              <div class="plabel-footer">
+                <div class="plabel-footer-legal">
+                  Comprobantes contables y tributarios sujetos a custodia física y fiscalización conforme a ley (SUNAT).<br>
+                  <strong>Fecha de Rotulación:</strong> ${dateFormatted}
+                </div>
+                <div class="plabel-sign-box">
+                  <div class="plabel-sign-line"></div>
+                  <div class="plabel-sign-caption">Responsable de Custodia / Auditor</div>
+                </div>
+              </div>
+            ` : ''}
+
+          </div>
+        </div>
+      `;
+    }
+
+    function executePrintBoxLabel() {
+      const config = getLabelConfig();
+      const previewHTML = document.getElementById('labelPreviewInner').innerHTML;
+
+      // Extract all necessary print styles
+      const printStyles = `
+        @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        body {
+          margin: 0;
+          padding: 0;
+          background: #FFFFFF;
+          color: #0D1627;
+          font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        .print-box-sheet {
+          background: #FFFFFF !important;
+          color: #0D1627 !important;
+          margin: 0 auto;
+          box-sizing: border-box;
+          width: 100%;
+        }
+
+        .sheet-a4 { width: 100%; max-width: 100%; padding: 1.5rem; min-height: 98vh; }
+        .sheet-a5 { width: 100%; max-width: 100%; padding: 1.2rem; min-height: 48vh; }
+        .sheet-compact { width: 100%; max-width: 100%; padding: 1rem; }
+
+        .plabel-border-frame {
+          border: 2px solid #0D1627;
+          padding: 1.2rem;
+          min-height: 90vh;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+        }
+        .sheet-a5 .plabel-border-frame { min-height: 44vh; }
+        .sheet-compact .plabel-border-frame { min-height: 380px; }
+        .plabel-cut-guide { border: 1.5px dashed #A0AEC0 !important; }
+
+        .plabel-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 2px solid #0D1627;
+          padding-bottom: 0.8rem;
+          margin-bottom: 0.9rem;
+        }
+        .plabel-brand { display: flex; align-items: center; gap: 0.75rem; }
+        .plabel-logo {
+          width: 38px; height: 38px; background: #090F1B !important; color: #DFB15B !important;
+          font-family: 'Newsreader', serif; font-weight: 700; font-size: 1.4rem;
+          display: flex; align-items: center; justify-content: center;
+          border-radius: 4px; border: 1.5px solid #DFB15B; -webkit-print-color-adjust: exact;
+        }
+        .plabel-company-name { font-family: 'Newsreader', serif; font-size: 1.15rem; font-weight: 700; color: #090F1B; }
+        .plabel-company-sub { font-size: 0.62rem; font-weight: 600; color: #64748B; text-transform: uppercase; }
+
+        .plabel-box-badge { text-align: right; }
+        .plabel-box-title { font-family: 'Newsreader', serif; font-size: 1.6rem; font-weight: 700; color: #090F1B; }
+        .plabel-box-qty { font-size: 0.75rem; font-weight: 700; color: #B38622; text-transform: uppercase; }
+
+        .plabel-meta-grid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+          background: #F8FAFC !important; border: 1px solid #CBD5E1; border-radius: 4px;
+          padding: 0.5rem 0.75rem; margin-bottom: 0.9rem; -webkit-print-color-adjust: exact;
+        }
+        .plabel-meta-cell { display: flex; flex-direction: column; gap: 0.15rem; }
+        .plabel-meta-label { font-size: 0.58rem; font-weight: 700; color: #64748B; text-transform: uppercase; }
+        .plabel-meta-val { font-size: 0.75rem; font-weight: 700; color: #0F172A; }
+
+        .plabel-table { width: 100%; border-collapse: collapse; margin-bottom: 0.9rem; font-size: 0.72rem; }
+        .plabel-table th {
+          background: #090F1B !important; color: #FFFFFF !important; font-size: 0.62rem;
+          font-weight: 700; text-transform: uppercase; padding: 0.35rem 0.5rem;
+          text-align: left; border: 1px solid #090F1B; -webkit-print-color-adjust: exact;
+        }
+        .plabel-table td { padding: 0.32rem 0.5rem; border: 1px solid #CBD5E1; color: #1E293B; vertical-align: middle; }
+        .plabel-table tr:nth-child(even) td { background: #F8FAFC !important; -webkit-print-color-adjust: exact; }
+        .plabel-td-folio { font-weight: 700; color: #090F1B; width: 48px; text-align: center; background: #F1F5F9 !important; }
+
+        .plabel-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+        .plabel-font-sm .plabel-table { font-size: 0.65rem; }
+        .plabel-font-sm .plabel-table td { padding: 0.22rem 0.4rem; }
+        .plabel-font-md .plabel-table { font-size: 0.74rem; }
+        .plabel-font-md .plabel-table td { padding: 0.34rem 0.5rem; }
+        .plabel-font-lg .plabel-table { font-size: 0.84rem; }
+        .plabel-font-lg .plabel-table td { padding: 0.45rem 0.6rem; }
+
+        .plabel-footer {
+          margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #0D1627;
+          display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem;
+        }
+        .plabel-footer-legal { font-size: 0.6rem; color: #64748B; line-height: 1.35; max-width: 65%; }
+        .plabel-sign-box { text-align: center; min-width: 170px; }
+        .plabel-sign-line { border-bottom: 1.5px solid #0D1627; margin-bottom: 0.3rem; height: 35px; }
+        .plabel-sign-caption { font-size: 0.62rem; font-weight: 700; color: #090F1B; text-transform: uppercase; }
+
+        .print-page-break {
+          page-break-after: always !important;
+          break-after: page !important;
+        }
+
+        @page {
+          margin: 8mm;
+          size: auto;
+        }
+      `;
+
+      // Try opening clean print window (best for PDF & iframe bypass)
+      try {
+        const printWindow = window.open('', '_blank', 'width=950,height=850');
+        if (printWindow) {
+          printWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+              <meta charset="UTF-8">
+              <title>Etiqueta de Custodia — Avante Consultores</title>
+              <style>${printStyles}</style>
+            </head>
+            <body>
+              ${previewHTML}
+              <script>
+                window.onload = function() {
+                  setTimeout(function() {
+                    window.print();
+                  }, 350);
+                };
+              <\/script>
+            </body>
+            </html>
+          `);
+          printWindow.document.close();
+          showToast('Ventana de impresión generada. Elige "Guardar como PDF" o tu impresora.', 'success');
+          return;
+        }
+      } catch (err) {
+        console.warn('Popup blocked, falling back to in-page print:', err);
+      }
+
+      // Fallback: in-page print
+      const printArea = document.getElementById('printableLabelArea');
+      printArea.innerHTML = previewHTML;
+      printArea.style.display = 'block';
+      setTimeout(() => {
+        window.print();
+        printArea.style.display = 'none';
+      }, 150);
+    }
+
+    // --- Utilities ---
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeBulkMoveModal();
+        closeDeleteModal();
+        closeResetModal();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
