@@ -1982,26 +1982,7 @@
           Exportar CSV
         </button>
 
-        <button class="btn btn-linen" onclick="exportBackupJSON()" title="Descargar copia de seguridad completa (JSON) para sincronizar o respaldar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-            <polyline points="17 21 17 13 7 13 7 21"/>
-            <polyline points="7 3 7 8 15 8"/>
-          </svg>
-          Respaldo JSON
-        </button>
-
-        <button class="btn btn-linen" onclick="triggerImportJSON()" title="Cargar copia de seguridad (JSON) para sincronizar datos">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-          Cargar JSON
-        </button>
-        <input type="file" id="importJsonFileInput" accept=".json" style="display:none;" onchange="handleImportJSON(event)">
-
-        <button class="btn btn-subtle" onclick="promptResetInitialData()" title="Restaurar dataset oficial con 5 cajas">
+        <button class="btn btn-subtle" onclick="promptResetInitialData()" title="Restaurar dataset original">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
             <path d="M21 3v5h-5"/>
