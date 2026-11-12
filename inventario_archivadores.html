@@ -4339,7 +4339,11 @@
       setTimeout(dismissToast, 3500);
     }
 
-    // --- Persistence & Migration ---
+    const FIREBASE_DB_URL = 'https://inventario-abd41-default-rtdb.firebaseio.com/archivadores.json';
+    let isSyncingToCloud = false;
+    let pendingCloudSync = false;
+
+    // --- Persistence & Cloud Realtime Sync ---
     function loadData() {
       try {
         let stored = localStorage.getItem(STORAGE_KEY);
@@ -4358,14 +4362,65 @@
       saveData();
     }
 
+    async function syncToFirebase() {
+      if (isSyncingToCloud) {
+        pendingCloudSync = true;
+        return;
+      }
+      isSyncingToCloud = true;
+      try {
+        await fetch(FIREBASE_DB_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(inventoryData)
+        });
+      } catch (err) {
+        console.warn('Error syncing to Firebase:', err);
+      } finally {
+        isSyncingToCloud = false;
+        if (pendingCloudSync) {
+          pendingCloudSync = false;
+          syncToFirebase();
+        }
+      }
+    }
+
+    async function fetchFromFirebase(silent = false) {
+      try {
+        const response = await fetch(FIREBASE_DB_URL);
+        if (!response.ok) return;
+        const remoteData = await response.json();
+        if (Array.isArray(remoteData) && remoteData.length > 0) {
+          const remoteStr = JSON.stringify(remoteData);
+          const localStr = JSON.stringify(inventoryData);
+          if (remoteStr !== localStr) {
+            inventoryData = remoteData;
+            try {
+              localStorage.setItem(STORAGE_KEY, remoteStr);
+            } catch (e) {}
+            populateFilterOptions();
+            populateEmpresasDatalist();
+            populateCajasDatalists();
+            applyFilters();
+            if (!silent) {
+              showToast('Sincronizado con la nube en vivo', 'success');
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Error fetching cloud data:', err);
+      }
+    }
+
     function saveData() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(inventoryData));
         localStorage.setItem('ARCHIVADORES_INVENTORY_DATA_V1', JSON.stringify(inventoryData));
       } catch (e) {
         console.error('Error saving to localStorage:', e);
-        showToast('Error al guardar datos localmente', 'danger');
       }
+      // Sincronizar inmediatamente a la base de datos en la nube
+      syncToFirebase();
     }
 
     // --- UI Init ---
@@ -4376,6 +4431,21 @@
       populateEmpresasDatalist();
       populateCajasDatalists();
       applyFilters();
+
+      // Consultar la base de datos en la nube al abrir la página
+      fetchFromFirebase(true);
+
+      // Auto-sincronizar cuando el usuario regresa a la pestaña (focus)
+      window.addEventListener('focus', () => {
+        fetchFromFirebase(true);
+      });
+
+      // Polling silencioso cada 15 segundos para reflejar cambios en tiempo real
+      setInterval(() => {
+        if (!document.hidden) {
+          fetchFromFirebase(true);
+        }
+      }, 15000);
     }
 
     function getCajasList() {
