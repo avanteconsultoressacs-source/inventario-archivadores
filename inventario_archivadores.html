@@ -1982,7 +1982,26 @@
           Exportar CSV
         </button>
 
-        <button class="btn btn-subtle" onclick="promptResetInitialData()" title="Restaurar dataset original">
+        <button class="btn btn-linen" onclick="exportBackupJSON()" title="Descargar copia de seguridad completa (JSON) para sincronizar o respaldar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Respaldo JSON
+        </button>
+
+        <button class="btn btn-linen" onclick="triggerImportJSON()" title="Cargar copia de seguridad (JSON) para sincronizar datos">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Cargar JSON
+        </button>
+        <input type="file" id="importJsonFileInput" accept=".json" style="display:none;" onchange="handleImportJSON(event)">
+
+        <button class="btn btn-subtle" onclick="promptResetInitialData()" title="Restaurar dataset oficial con 5 cajas">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
             <path d="M21 3v5h-5"/>
@@ -2353,7 +2372,7 @@
       </div>
       <div class="modal-body">
         <p style="font-family:var(--font-serif); font-size:0.92rem; color:var(--ink-secondary); line-height:1.5;">
-          Esta acción restablecerá el inventario completo a los <strong>120 archivadores originales</strong>, revirtiendo cambios no guardados en el almacenamiento local.
+          Esta acción restablecerá el inventario completo a los <strong>119 archivadores y 5 cajas de custodia oficiales</strong> (C1, C2, C4, C5, C6), revirtiendo cambios locales.
         </p>
       </div>
       <div class="modal-footer">
@@ -2466,7 +2485,7 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    const STORAGE_KEY = 'ARCHIVADORES_INVENTORY_DATA_V2';
+    const STORAGE_KEY = 'ARCHIVADORES_INVENTORY_DATA_V3';
     const THEME_KEY = 'ARCHIVADORES_THEME';
 
     const INITIAL_DATA = [
@@ -2480,7 +2499,7 @@
     "banco": "",
     "parte": "",
     "notas": "Compras y Bancos inferido",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -2508,7 +2527,7 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -2718,9 +2737,9 @@
     "banco": "",
     "parte": "Parte VI",
     "notas": "Validación VI",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 19,
@@ -2774,9 +2793,9 @@
     "banco": "",
     "parte": "Parte V",
     "notas": "Validación V",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 23,
@@ -2788,9 +2807,9 @@
     "banco": "",
     "parte": "Parte II",
     "notas": "Validación II",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 24,
@@ -2802,9 +2821,9 @@
     "banco": "",
     "parte": "Parte IV",
     "notas": "Validación IV",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 25,
@@ -2816,9 +2835,9 @@
     "banco": "",
     "parte": "Parte I",
     "notas": "Validación I",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 26,
@@ -2844,9 +2863,9 @@
     "banco": "",
     "parte": "Parte III",
     "notas": "Validación III",
-    "ubicacion": "Izquierda",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 28,
@@ -3096,23 +3115,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
-  },
-  {
-    "id": 46,
-    "empresa": "Alcaba",
-    "descripcion": "Alcaba | Ventas Enero 2026 (duplicado/2da copia)",
-    "tipo": "Ventas",
-    "mes": "Enero",
-    "año": "2026",
-    "banco": "",
-    "parte": "",
-    "notas": "Duplicado / 2da copia",
-    "ubicacion": "Derecha",
-    "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 47,
@@ -3124,9 +3129,9 @@
     "banco": "",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 48,
@@ -3152,9 +3157,9 @@
     "banco": "",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 50,
@@ -3250,9 +3255,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 57,
@@ -3264,9 +3269,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 58,
@@ -3306,9 +3311,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 61,
@@ -3320,9 +3325,9 @@
     "banco": "Scotiabank",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 62,
@@ -3334,9 +3339,9 @@
     "banco": "",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 63,
@@ -3348,9 +3353,9 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 64,
@@ -3362,9 +3367,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 65,
@@ -3376,9 +3381,9 @@
     "banco": "",
     "parte": "Parte 3",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 66,
@@ -3390,9 +3395,9 @@
     "banco": "",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 67,
@@ -3404,9 +3409,9 @@
     "banco": "",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 68,
@@ -3432,9 +3437,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 70,
@@ -3446,9 +3451,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 71,
@@ -3460,9 +3465,9 @@
     "banco": "",
     "parte": "",
     "notas": "2da copia",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 72,
@@ -3474,9 +3479,9 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C4"
   },
   {
     "id": 73,
@@ -3488,9 +3493,9 @@
     "banco": "",
     "parte": "",
     "notas": "Meses 04 a 06",
-    "ubicacion": "Derecha",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C6"
   },
   {
     "id": 74,
@@ -3558,9 +3563,9 @@
     "banco": "Scotiabank",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 79,
@@ -3572,9 +3577,9 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 80,
@@ -3586,9 +3591,9 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 81,
@@ -3600,9 +3605,9 @@
     "banco": "Scotiabank",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C5"
   },
   {
     "id": 82,
@@ -3796,7 +3801,7 @@
     "banco": "Scotiabank",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3810,7 +3815,7 @@
     "banco": "BBVA",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3824,7 +3829,7 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3838,7 +3843,7 @@
     "banco": "",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3852,7 +3857,7 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "Openpay Jockey",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3866,7 +3871,7 @@
     "banco": "BCP",
     "parte": "",
     "notas": "Culqui",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3880,7 +3885,7 @@
     "banco": "BCP",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Derecha",
     "foto": "",
     "caja": ""
   },
@@ -3894,9 +3899,9 @@
     "banco": "",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 103,
@@ -3908,9 +3913,9 @@
     "banco": "",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 104,
@@ -3922,9 +3927,9 @@
     "banco": "BCP",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 105,
@@ -3936,9 +3941,9 @@
     "banco": "BCP",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 106,
@@ -3964,9 +3969,9 @@
     "banco": "BBVA",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 108,
@@ -3978,9 +3983,9 @@
     "banco": "BCP",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 109,
@@ -3992,9 +3997,9 @@
     "banco": "BCP",
     "parte": "Parte 2",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 110,
@@ -4006,9 +4011,9 @@
     "banco": "Scotiabank",
     "parte": "Parte 1",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C1"
   },
   {
     "id": 111,
@@ -4020,9 +4025,9 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 112,
@@ -4034,9 +4039,9 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 113,
@@ -4048,9 +4053,9 @@
     "banco": "Scotiabank",
     "parte": "",
     "notas": "Scoty y otros",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 114,
@@ -4062,9 +4067,9 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 115,
@@ -4076,9 +4081,9 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 116,
@@ -4090,9 +4095,9 @@
     "banco": "Scotiabank",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 117,
@@ -4104,9 +4109,9 @@
     "banco": "BCP",
     "parte": "",
     "notas": "",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 118,
@@ -4118,9 +4123,9 @@
     "banco": "BBVA",
     "parte": "",
     "notas": "BBVA y otros",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 119,
@@ -4132,9 +4137,9 @@
     "banco": "Scotiabank",
     "parte": "",
     "notas": "Scoty",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   },
   {
     "id": 120,
@@ -4146,9 +4151,9 @@
     "banco": "",
     "parte": "",
     "notas": "Extras",
-    "ubicacion": "Encima",
+    "ubicacion": "Almacén",
     "foto": "",
-    "caja": ""
+    "caja": "C2"
   }
 ];
 
@@ -4357,47 +4362,17 @@
     function loadData() {
       try {
         let stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) {
-          stored = localStorage.getItem('ARCHIVADORES_INVENTORY_DATA_V1');
-        }
-
         if (stored) {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            inventoryData = parsed.map(item => {
-              if (!item.tipo || item.tipo === 'CyB' || item.tipo === 'CYB' || item.tipo.toLowerCase().includes('caja y bancos')) {
-                item.tipo = 'Compras y Bancos';
-              }
-              if (item.descripcion) {
-                item.descripcion = item.descripcion.replace(/\bCyB\b/g, 'Compras y Bancos').replace(/\bCYB\b/g, 'Compras y Bancos');
-              }
-              if ('ao' in item) {
-                item['año'] = item['ao'];
-                delete item['ao'];
-              }
-              if (!item.caja) {
-                if (item.ubicacion && (item.ubicacion.startsWith('Almacén') || item.ubicacion.startsWith('Almacen'))) {
-                  const parts = item.ubicacion.split(/\s+|-|•/);
-                  if (parts.length > 1) {
-                    const possibleCaja = parts.slice(1).join(' ').trim();
-                    if (possibleCaja) {
-                      item.ubicacion = 'Almacén';
-                      item.caja = possibleCaja;
-                    }
-                  }
-                } else {
-                  item.caja = '';
-                }
-              }
-              return item;
-            });
-            saveData();
+            inventoryData = parsed;
             return;
           }
         }
       } catch (e) {
         console.warn('Error reading from localStorage, using initial dataset:', e);
       }
+      // Inicializar con el dataset oficial que incluye las 5 cajas de Almacén
       inventoryData = JSON.parse(JSON.stringify(INITIAL_DATA));
       saveData();
     }
@@ -5664,8 +5639,9 @@
       populateFilterOptions();
       populateEmpresasDatalist();
       applyFilters();
+      renderBoxesGrid();
       closeResetModal();
-      showToast('Dataset original restaurado (120 archivadores)', 'success');
+      showToast('Dataset oficial restaurado (119 archivadores, 5 cajas)', 'success');
     }
 
     // --- Export to CSV (UTF-8 BOM) ---
@@ -5705,6 +5681,55 @@
       URL.revokeObjectURL(url);
 
       showToast(`Exportados ${dataToExport.length} registros a CSV`, 'success');
+    }
+
+    // --- Respaldo & Sincronización JSON ---
+    function exportBackupJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(inventoryData, null, 2));
+      const now = new Date().toISOString().slice(0, 10);
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `respaldo_custodia_archivadores_${now}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('Copia de seguridad JSON descargada correctamente', 'success');
+    }
+
+    function triggerImportJSON() {
+      const input = document.getElementById('importJsonFileInput');
+      if (input) {
+        input.value = '';
+        input.click();
+      }
+    }
+
+    function handleImportJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported) && imported.length > 0) {
+            inventoryData = imported;
+            selectedIds.clear();
+            saveData();
+            populateFilterOptions();
+            populateEmpresasDatalist();
+            updateStats();
+            applyFiltersAndRender();
+            renderBoxesGrid();
+            showToast(`Copia importada: ${imported.length} archivadores sincronizados`, 'success');
+          } else {
+            showToast('El archivo no contiene un formato de inventario válido', 'danger');
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Error al leer el archivo JSON de respaldo', 'danger');
+        }
+      };
+      reader.readAsText(file, 'UTF-8');
     }
 
     // --- Mobile Sidebar Toggle ---
